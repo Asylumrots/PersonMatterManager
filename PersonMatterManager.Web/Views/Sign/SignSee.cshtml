@@ -1,0 +1,337 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Matrix Admin</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="~/wwwroot/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/wwwroot/css/bootstrap-responsive.min.css" />
+    <link rel="stylesheet" href="~/wwwroot/css/uniform.css" />
+    <link rel="stylesheet" href="~/wwwroot/css/select2.css" />
+    <link rel="stylesheet" href="~/wwwroot/css/matrix-style.css" />
+    <link rel="stylesheet" href="~/wwwroot/css/matrix-media.css" />
+    <link href="~/wwwroot/font-awesome/css/font-awesome.css" rel="stylesheet" />
+    <link href='http://www.jinliniuan.com/css/css?family=Open+Sans:400,700,800' rel='stylesheet' type='text/css'>
+</head>
+<body>
+    @RenderPage("~/Views/Menu.cshtml")
+    <div id="content">
+        <div id="content-header">
+            <div id="breadcrumb"> <a href="#" class="tip-bottom" data-original-title="Go to Home"><i class="icon-home"></i> 主页</a> <a href="#" class="current">查看本日考勤</a> </div>
+
+        </div>
+        <div class="container-fluid">
+            <div class="row-fluid">
+                <div class="span12">
+
+                    <div class="widget-box">
+                        <div class="widget-title">
+                            <span class="icon"> <i class="icon-th"></i> </span>
+                            <h5>本部门考勤管理</h5>
+                            <button class="btn btn-info" onclick="ModifyRemakeCheck()"><span class="icon-pencil"></span></button>
+                            <button class="btn btn-danger" onclick="DelCheck()" ><span class="icon-remove"></span></button>
+                            <button style="display:none" data-toggle="modal" data-target="#EditModel" id="Editbox"></button>
+                            <button style="display:none" data-toggle="modal" data-target="#DelModal" id="Delbox"></button>
+                        </div>
+                        <div class="widget-content ">
+                            <table class="table table-bordered table-striped with-check">
+                                <thead>
+                                    <tr>
+                                        <th><div style="position:relative;left:2px;bottom:2px"><div class="checker" id="uniform-title-table-checkbox"><span><input type="checkbox" id="title-table-checkbox" name="title-table-checkbox" style="opacity: 0;"></span></div></div></th>
+                                        <th>考勤时间</th>
+                                        <th>姓名</th>
+                                        <th>出勤时间</th>
+                                        <th>退勤时间</th>
+                                        <th>备注</th>
+                                        <th>考勤状态</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tbodys">
+                                    @*<tr>
+                                        <td><div class="checker" id="uniform-undefined"><span ><input type="checkbox" style="opacity: 0;"></span></div></td>
+                                        <td style="text-align:center">Row 1</td>
+                                        <td style="text-align:center">Row 2</td>
+                                    </tr>
+                                    <tr>
+                                        <td><div class="checker" id="uniform-undefined"><span><input type="checkbox" style="opacity: 0;"></span></div></td>
+                                        <td style="text-align:center">Row 1</td>
+                                        <td style="text-align:center">Row 2</td>
+                                    </tr>
+                                    <tr>
+                                        <td><div class="checker" id="uniform-undefined"><span><input type="checkbox" style="opacity: 0;"></span></div></td>
+                                        <td style="text-align:center">Row 1</td>
+                                        <td style="text-align:center">Row 2</td>
+                                    </tr>
+                                    <tr>
+                                        <td><div class="" id="" style="text-align:center"><input type="checkbox" style="resize:both"></div></td>
+                                        <td style="text-align:center">Row 11</td>
+                                        <td style="text-align:center">Row 21</td>
+                                    </tr>*@
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 模态框示例（Modal） -->
+        <form method="post" action="" class="form-horizontal" role="form" id="form_data" @*onsubmit="return AddDepartment()"*@ style="margin: 20px;">
+            <div class="modal fade" id="EditModel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                                ×
+                            </button>
+                            <h4 class="modal-title" id="myModalLabel">
+                                修改备注
+                            </h4>
+                        </div>
+                        <div class="modal-body">
+                            <form class="form-horizontal" role="form">
+                                <div class="form-group">
+                                    <label for="remake" class="col-sm-3 control-label">备注:</label>
+                                    <div class="col-sm-9">
+                                        <input type="text" class="form-control" id="remake" name="remake" value=""
+                                               placeholder="" style="margin-left:10px;margin-top:10px">
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <label id="errortxt" style="display:inline-block;margin-right:37%;color:red"></label>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">
+                                关闭
+                            </button>
+                            <button type="button" onclick="AddRemake()" class="btn btn-primary">
+                                提交
+                            </button><span id="tip"> </span>
+                        </div>
+                    </div><!-- /.modal-content -->
+                </div><!-- /.modal -->
+            </div>
+        </form>
+
+
+        <!-- 模态框示例（Modal） -->
+        <form method="post" action="" class="form-horizontal" role="form" id="form_data" @*onsubmit="return AddDepartment()"*@ style="margin: 20px;">
+            <div class="modal fade" id="DelModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="width:320px;margin-left:-10%">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                                ×
+                            </button>
+                            <h4 class="modal-title" id="myModalLabel">
+                                操作提示？
+                            </h4>
+                        </div>
+                        <div class="modal-body">
+                            <form class="form-horizontal" role="form">
+                                <div class="form-group">
+                                    <label for="DepartmentName" class="col-sm-3 control-label">确认要删除选中项吗？</label>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <label id="errortxt" style="display:inline-block;margin-right:37%;color:red"></label>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">
+                                取消
+                            </button>
+                            <button type="button" onclick="DelAttendance()" class="btn btn-success">
+                                确认
+                            </button><span id="tip"> </span>
+                        </div>
+                    </div><!-- /.modal-content -->
+                </div><!-- /.modal -->
+            </div>
+        </form>
+
+        <button type="button" id="show" data-toggle="modal" data-target="#AlterModal" style="display:none"></button>
+        <form method="post" action="" class="form-horizontal" role="form" id="s" @*onsubmit="return AddDepartment()"*@ style="margin: 20px;">
+            <div class="modal fade" id="AlterModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="width:320px;margin-left:-10%">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                                ×
+                            </button>
+                            <h4 class="modal-title" id="myModalLabel">
+                                操作提示
+                            </h4>
+                        </div>
+                        <div class="modal-body">
+                            <form class="form-horizontal" role="form">
+                                <div class="form-group">
+                                    <label for="DepartmentName" class="col-sm-3 control-label" id="backtxt"></label>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <label id="errortxt" style="display:inline-block;margin-right:37%;color:red"></label>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">
+                                确认
+                            </button><span id="tip"> </span>
+                        </div>
+                    </div><!-- /.modal-content -->
+                </div><!-- /.modal -->
+            </div>
+        </form>
+
+    </div>
+    <!--Footer-part-->
+    <div class="row-fluid">
+        <div id="footer" class="span12"> 2013 &copy; Mafortrix Admin. More Templates <a href="http://www.jinliniuan.com/" target="_blank">金林苑</a></div>
+    </div>
+    <!--end-Footer-part-->
+    <script src="~/wwwroot/js/jquery.min.js"></script>
+    <script src="~/wwwroot/js/jquery.ui.custom.js"></script>
+    <script src="~/wwwroot/js/bootstrap.min.js"></script>
+    <script src="~/wwwroot/js/jquery.uniform.js"></script>
+    <script src="~/wwwroot/js/select2.min.js"></script>
+    <script src="~/wwwroot/js/jquery.dataTables.min.js"></script>
+    <script src="~/wwwroot/js/matrix.js"></script>
+    <script src="~/wwwroot/js/matrix.tables.js"></script>
+    <script>
+        $(function () {
+            function data_string(str) {
+                var d = eval('new ' + str.substr(1, str.length - 2));
+                var ar_date = [d.getFullYear(), d.getMonth() + 1, d.getDate(), d.getHours(), d.getMinutes(), d.getSeconds()];
+                for (var i = 0; i < ar_date.length; i++) ar_date[i] = dFormat(ar_date[i]);
+                return ar_date.slice(0, 3).join('-') + ' ' + ar_date.slice(3).join(':');
+                function dFormat(i) { return i < 10 ? "0" + i.toString() : i; }
+            }
+            $("#Sign").css("background", "#27a9e3").children("a").css("color", "white");
+            $.ajax({
+                type: "post",
+                url: "/Sign/GetSignSeeDep",
+                success: function (data) {
+                    var html;
+                    if (data.length == 0) {
+                        html = '<tr><td colspan="7" style="text-align:center;">暂无数据</td></tr>';
+                        $("#tbodys").append(html);
+                    }
+                    else {
+                        for (var i = 0; i < data.length; i++) {
+                            var item = data[i];
+                            var stime, etime, remakes,type;
+                            if (item.ClockOutTime == null) {
+                                etime = "-";
+                            }
+                            else {
+                                etime = data_string(item.ClockTime);
+                            }
+                            if (item.remake == null) {
+                                remakes = "-";
+                            }
+                            else {
+                                remakes = item.remake;
+                            }
+                            if (item.AttendanceType == 1) {
+                                type = "正常";
+                            }else if (item.AttendanceType == 2) {
+                                type = "迟到";
+                            } else if (item.AttendanceType == 3) {
+                                type = "早退";
+                            } else if (item.AttendanceType == 4) {
+                                type = "缺勤";
+                            } else if (item.AttendanceType == 5) {
+                                type = "请假";
+                            } else if (item.AttendanceType == 6) {
+                                type = "迟到/早退";
+                            } else if (item.AttendanceType == 7) {
+                                type = "未打卡";
+                            }
+                            html = '<tr><td><div style=""><input type="checkbox" style="height:15px;width:15px;position:relative;left:7px;bottom:2px"></div></td>' +
+                                '<td style="text-align:center">' + data_string(item.AttendanceStartTime) + '</td>' +
+                                '<td style="text-align:center">' + item.UserName + '</td>' +
+                                '<td style="text-align:center">' + data_string(item.ClockTime) + '</td>' +
+                                '<td style="text-align:center">' + etime + '</td>' +
+                                '<td style="text-align:center">' + remakes + '</td>' +
+                                '<td style="text-align:center">' + type + '</td></tr >';
+                            $("#tbodys").append(html);
+                        }
+                    }
+                }
+            });
+
+            //关闭清空输入
+            $(function () {
+                $('#addUserModal').on('hide.bs.modal', function () {
+                    $("#DepartmentName").val();
+                })
+            });
+
+        })
+        function ModifyRemakeCheck() {
+            if ($("#tbodys input:checked").length > 1 || $("#tbodys input:checked").length == 0) {
+                $("#show").trigger("click");
+                $("#backtxt").text("请选中行，请勿选中多行！");
+                return false;
+            }
+            else {
+                $("#remake").val($("#tbodys input:checked").eq(0).parent().parent().parent().parent().next().next().next().next().next().text());
+                $("#Editbox").trigger("click");
+            }
+        }
+
+        function DelCheck() {
+            if ($("#tbodys input:checked").length == 0) {
+                $("#show").trigger("click");
+                $("#backtxt").text("请选中行！");
+                return false;
+            }
+            else {
+                $("#Delbox").trigger("click");
+            }
+        }
+
+
+        function AddRemake() {
+            var time = $("#tbodys input:checked").eq(0).parent().parent().parent().parent().next().text();
+            var name = $("#tbodys input:checked").eq(0).parent().parent().parent().parent().next().next().text();
+            var remakes = $("#remake").val();
+            //console.log(time + "  " + name)
+            $.ajax({
+                type: "post",
+                url: "/Sign/AddRemake",
+                data: { time: time, name: name, remakes: remakes },
+                success: function (data) {
+                    if (data == "False") {
+                        $("#errortxt").text("系统繁忙请重试！");
+                        return false;
+                    }
+                    else if (data == "True") {
+                        location.reload();
+                    }
+                }
+            })
+        }
+        function DelAttendance() {
+            var time = new Array();
+            var name = new Array();
+            for (var i = 0; i < $("#tbodys input:checked").length; i++) {
+                time[i] = $("#tbodys input:checked").eq(i).parent().parent().next().text();
+            }
+            for (var i = 0; i < $("#tbodys input:checked").length; i++) {
+                name[i] = $("#tbodys input:checked").eq(i).parent().parent().next().next().text();
+            }
+            $.ajax({
+                type: "post",
+                url: "/Sign/DelAttendance",
+                data: { time: time, name: name },
+                success: function (data) {
+                    if (data == "False") {
+                        alert("删除失败！");
+                        return false;
+                    }
+                    else if (data == "True") {
+                        location.reload();
+                    }
+                }
+            })
+        }
+    </script>
+</body>
+</html>

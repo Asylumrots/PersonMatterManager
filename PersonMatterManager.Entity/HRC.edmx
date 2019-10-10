@@ -1,0 +1,655 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="HRCModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Assessment">
+          <Key>
+            <PropertyRef Name="AssessmentID" />
+          </Key>
+          <Property Name="AssessmentID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PerformanceTime" Type="datetime" />
+          <Property Name="UserID" Type="int" />
+          <Property Name="WorkSummary" Type="varchar(max)" />
+          <Property Name="UpperGoal" Type="varchar(max)" />
+          <Property Name="CompletionDegree" Type="float" />
+          <Property Name="ExaminationItems" Type="varchar" MaxLength="100" />
+          <Property Name="NextStageObjectives" Type="varchar" MaxLength="100" />
+          <Property Name="PerformanceScore" Type="float" />
+          <Property Name="comments" Type="varchar" MaxLength="500" />
+          <Property Name="perstate" Type="int" />
+        </EntityType>
+        <EntityType Name="AttendanceSheet">
+          <Key>
+            <PropertyRef Name="AttendanceID" />
+          </Key>
+          <Property Name="AttendanceID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="AttendanceStartTime" Type="datetime" />
+          <Property Name="AttendanceType" Type="int" />
+          <Property Name="UserID" Type="int" />
+          <Property Name="DepartmentID" Type="int" />
+          <Property Name="UserName" Type="varchar" MaxLength="20" />
+          <Property Name="ClockTime" Type="datetime" />
+          <Property Name="ClockOutTime" Type="datetime" />
+          <Property Name="Workinghours" Type="int" />
+          <Property Name="remake" Type="varchar" MaxLength="500" />
+          <Property Name="Late" Type="int" />
+          <Property Name="Absenteeism" Type="int" />
+        </EntityType>
+        <EntityType Name="CategoryItems">
+          <Key>
+            <PropertyRef Name="CID" />
+          </Key>
+          <Property Name="CID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="C_Category" Type="varchar" MaxLength="20" />
+          <Property Name="CI_ID" Type="int" />
+          <Property Name="CI_Name" Type="varchar" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="Department">
+          <Key>
+            <PropertyRef Name="DepartmentID" />
+          </Key>
+          <Property Name="DepartmentID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DepartmentName" Type="varchar" MaxLength="20" />
+          <Property Name="People" Type="int" />
+        </EntityType>
+        <EntityType Name="Leave">
+          <Key>
+            <PropertyRef Name="LeaveID" />
+          </Key>
+          <Property Name="LeaveID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserID" Type="int" />
+          <Property Name="LeaveState" Type="int" />
+          <Property Name="LeaveTime" Type="datetime" />
+          <Property Name="LeaveStartTime" Type="datetime" />
+          <Property Name="LeaveEndTime" Type="datetime" />
+          <Property Name="LeaveHalfDay" Type="varchar" MaxLength="50" />
+          <Property Name="LeaveDays" Type="int" />
+          <Property Name="LeaveReason" Type="varchar" MaxLength="250" />
+          <Property Name="ApproverID" Type="int" />
+          <Property Name="ApprovalTime" Type="datetime" />
+          <Property Name="ApproverReason" Type="varchar" MaxLength="250" />
+        </EntityType>
+        <EntityType Name="Notice">
+          <Key>
+            <PropertyRef Name="NoticeID" />
+          </Key>
+          <Property Name="NoticeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NoticeType" Type="int" />
+          <Property Name="NoticeTitle" Type="varchar" MaxLength="50" />
+          <Property Name="NoticeContent" Type="varchar(max)" />
+          <Property Name="UserID" Type="int" />
+          <Property Name="NoticeStateTime" Type="datetime" />
+          <Property Name="NoticeEndTime" Type="datetime" />
+          <Property Name="NoticeState" Type="int" />
+        </EntityType>
+        <EntityType Name="Overtime">
+          <Key>
+            <PropertyRef Name="OvertimeID" />
+          </Key>
+          <Property Name="OvertimeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="OvertimeStateTime" Type="datetime" />
+          <Property Name="OvertimeEndTime" Type="datetime" />
+          <Property Name="OvertimeDuration" Type="int" />
+          <Property Name="UserID" Type="int" />
+          <Property Name="ApplyTime" Type="datetime" />
+          <Property Name="OvertimeState" Type="int" />
+          <Property Name="ApproverReason" Type="varchar" MaxLength="250" />
+        </EntityType>
+        <EntityType Name="OvertimeCheck">
+          <Key>
+            <PropertyRef Name="ApprovalID" />
+          </Key>
+          <Property Name="ApprovalID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="LeaveID" Type="int" />
+          <Property Name="UserID" Type="int" />
+          <Property Name="ApprovalType" Type="int" />
+          <Property Name="DepartmentalAudit" Type="int" />
+          <Property Name="DepartmentalAuditRemarks" Type="varchar" MaxLength="250" />
+          <Property Name="ManagerAudit" Type="int" />
+          <Property Name="ManagerAuditRemarks" Type="varchar" MaxLength="250" />
+          <Property Name="GeneralManagerAudit" Type="int" />
+          <Property Name="GeneralManagerAuditRemarks" Type="varchar" MaxLength="250" />
+        </EntityType>
+        <EntityType Name="PayRise">
+          <Key>
+            <PropertyRef Name="PayRiseID" />
+          </Key>
+          <Property Name="PayRiseID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserID" Type="int" />
+          <Property Name="PayRiseMoney" Type="money" />
+          <Property Name="Reason" Type="varchar(max)" />
+          <Property Name="ApplicationTime" Type="datetime" />
+          <Property Name="ApprovalContent" Type="varchar" MaxLength="500" />
+          <Property Name="ApprovalState" Type="int" />
+          <Property Name="ApprovalTime" Type="datetime" />
+        </EntityType>
+        <EntityType Name="PaySlip">
+          <Key>
+            <PropertyRef Name="PaySlipID" />
+          </Key>
+          <Property Name="PaySlipID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserID" Type="int" />
+          <Property Name="Prize" Type="money" />
+          <Property Name="LeaveMoney" Type="money" />
+          <Property Name="OvertimeMoney" Type="money" />
+          <Property Name="LateMoney" Type="money" />
+          <Property Name="AdvanceMoney" Type="money" />
+          <Property Name="Absence" Type="money" />
+          <Property Name="fine" Type="money" />
+          <Property Name="Sa_Bonus" Type="money" />
+          <Property Name="Sa_Time" Type="datetime" />
+          <Property Name="Sa_TotalSalary" Type="money" />
+        </EntityType>
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="RoleID" />
+          </Key>
+          <Property Name="RoleID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RoleName" Type="varchar" MaxLength="50" />
+          <Property Name="RoleNumber" Type="float" />
+        </EntityType>
+        <EntityType Name="Salary">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserName" Type="varchar" MaxLength="20" />
+          <Property Name="BasicSalary" Type="money" />
+          <Property Name="AttendanceBonus" Type="money" />
+          <Property Name="Fine" Type="money" />
+          <Property Name="SalaryTime" Type="datetime" />
+          <Property Name="SalarySum" Type="money" />
+        </EntityType>
+        <EntityType Name="SystemLog">
+          <Key>
+            <PropertyRef Name="LogID" />
+          </Key>
+          <Property Name="LogID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="LogName" Type="varchar" MaxLength="20" />
+          <Property Name="LogTime" Type="datetime" />
+          <Property Name="LogOperation" Type="varchar" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="UserInfo">
+          <Key>
+            <PropertyRef Name="UserID" />
+          </Key>
+          <Property Name="UserID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DepartmentID" Type="int" />
+          <Property Name="RoleID" Type="int" />
+          <Property Name="UserNumber" Type="varchar" MaxLength="50" />
+          <Property Name="LoginName" Type="varchar" MaxLength="50" />
+          <Property Name="LoginPwd" Type="varchar" MaxLength="50" />
+          <Property Name="UserName" Type="varchar" MaxLength="20" />
+          <Property Name="UserAge" Type="int" />
+          <Property Name="UserSex" Type="int" />
+          <Property Name="UserTel" Type="varchar" MaxLength="50" />
+          <Property Name="UserAddress" Type="varchar" MaxLength="100" />
+          <Property Name="UserIphone" Type="varchar" MaxLength="50" />
+          <Property Name="UserRemarks" Type="varchar" MaxLength="250" />
+          <Property Name="UserStatr" Type="int" />
+          <Property Name="EntryTime" Type="datetime" />
+          <Property Name="DimissionTime" Type="datetime" />
+          <Property Name="BasePay" Type="money" />
+        </EntityType>
+        <EntityContainer Name="HRCModelStoreContainer">
+          <EntitySet Name="Assessment" EntityType="Self.Assessment" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AttendanceSheet" EntityType="Self.AttendanceSheet" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CategoryItems" EntityType="Self.CategoryItems" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Department" EntityType="Self.Department" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Leave" EntityType="Self.Leave" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Notice" EntityType="Self.Notice" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Overtime" EntityType="Self.Overtime" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="OvertimeCheck" EntityType="Self.OvertimeCheck" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PayRise" EntityType="Self.PayRise" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PaySlip" EntityType="Self.PaySlip" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Role" EntityType="Self.Role" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Salary" EntityType="Self.Salary" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SystemLog" EntityType="Self.SystemLog" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserInfo" EntityType="Self.UserInfo" Schema="dbo" store:Type="Tables" />
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="HRCModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Assessment">
+          <Key>
+            <PropertyRef Name="AssessmentID" />
+          </Key>
+          <Property Name="AssessmentID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PerformanceTime" Type="DateTime" Precision="3" />
+          <Property Name="UserID" Type="Int32" />
+          <Property Name="WorkSummary" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="UpperGoal" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="CompletionDegree" Type="Double" />
+          <Property Name="ExaminationItems" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="NextStageObjectives" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="PerformanceScore" Type="Double" />
+          <Property Name="comments" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="perstate" Type="Int32" />
+        </EntityType>
+        <EntityType Name="AttendanceSheet">
+          <Key>
+            <PropertyRef Name="AttendanceID" />
+          </Key>
+          <Property Name="AttendanceID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AttendanceStartTime" Type="DateTime" Precision="3" />
+          <Property Name="AttendanceType" Type="Int32" />
+          <Property Name="UserID" Type="Int32" />
+          <Property Name="DepartmentID" Type="Int32" />
+          <Property Name="UserName" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="ClockTime" Type="DateTime" Precision="3" />
+          <Property Name="ClockOutTime" Type="DateTime" Precision="3" />
+          <Property Name="Workinghours" Type="Int32" />
+          <Property Name="remake" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="Late" Type="Int32" />
+          <Property Name="Absenteeism" Type="Int32" />
+        </EntityType>
+        <EntityType Name="CategoryItems">
+          <Key>
+            <PropertyRef Name="CID" />
+          </Key>
+          <Property Name="CID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="C_Category" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="CI_ID" Type="Int32" />
+          <Property Name="CI_Name" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="Department">
+          <Key>
+            <PropertyRef Name="DepartmentID" />
+          </Key>
+          <Property Name="DepartmentID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DepartmentName" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="People" Type="Int32" />
+        </EntityType>
+        <EntityType Name="Leave">
+          <Key>
+            <PropertyRef Name="LeaveID" />
+          </Key>
+          <Property Name="LeaveID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserID" Type="Int32" />
+          <Property Name="LeaveState" Type="Int32" />
+          <Property Name="LeaveTime" Type="DateTime" Precision="3" />
+          <Property Name="LeaveStartTime" Type="DateTime" Precision="3" />
+          <Property Name="LeaveEndTime" Type="DateTime" Precision="3" />
+          <Property Name="LeaveHalfDay" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="LeaveDays" Type="Int32" />
+          <Property Name="LeaveReason" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="ApproverID" Type="Int32" />
+          <Property Name="ApprovalTime" Type="DateTime" Precision="3" />
+          <Property Name="ApproverReason" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="Notice">
+          <Key>
+            <PropertyRef Name="NoticeID" />
+          </Key>
+          <Property Name="NoticeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NoticeType" Type="Int32" />
+          <Property Name="NoticeTitle" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="NoticeContent" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="UserID" Type="Int32" />
+          <Property Name="NoticeStateTime" Type="DateTime" Precision="3" />
+          <Property Name="NoticeEndTime" Type="DateTime" Precision="3" />
+          <Property Name="NoticeState" Type="Int32" />
+        </EntityType>
+        <EntityType Name="Overtime">
+          <Key>
+            <PropertyRef Name="OvertimeID" />
+          </Key>
+          <Property Name="OvertimeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="OvertimeStateTime" Type="DateTime" Precision="3" />
+          <Property Name="OvertimeEndTime" Type="DateTime" Precision="3" />
+          <Property Name="OvertimeDuration" Type="Int32" />
+          <Property Name="UserID" Type="Int32" />
+          <Property Name="ApplyTime" Type="DateTime" Precision="3" />
+          <Property Name="OvertimeState" Type="Int32" />
+          <Property Name="ApproverReason" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="OvertimeCheck">
+          <Key>
+            <PropertyRef Name="ApprovalID" />
+          </Key>
+          <Property Name="ApprovalID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="LeaveID" Type="Int32" />
+          <Property Name="UserID" Type="Int32" />
+          <Property Name="ApprovalType" Type="Int32" />
+          <Property Name="DepartmentalAudit" Type="Int32" />
+          <Property Name="DepartmentalAuditRemarks" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="ManagerAudit" Type="Int32" />
+          <Property Name="ManagerAuditRemarks" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="GeneralManagerAudit" Type="Int32" />
+          <Property Name="GeneralManagerAuditRemarks" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="PayRise">
+          <Key>
+            <PropertyRef Name="PayRiseID" />
+          </Key>
+          <Property Name="PayRiseID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserID" Type="Int32" />
+          <Property Name="PayRiseMoney" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="Reason" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="ApplicationTime" Type="DateTime" Precision="3" />
+          <Property Name="ApprovalContent" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="ApprovalState" Type="Int32" />
+          <Property Name="ApprovalTime" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="PaySlip">
+          <Key>
+            <PropertyRef Name="PaySlipID" />
+          </Key>
+          <Property Name="PaySlipID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserID" Type="Int32" />
+          <Property Name="Prize" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="LeaveMoney" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="OvertimeMoney" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="LateMoney" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="AdvanceMoney" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="Absence" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="fine" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="Sa_Bonus" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="Sa_Time" Type="DateTime" Precision="3" />
+          <Property Name="Sa_TotalSalary" Type="Decimal" Precision="19" Scale="4" />
+        </EntityType>
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="RoleID" />
+          </Key>
+          <Property Name="RoleID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RoleName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="RoleNumber" Type="Double" />
+        </EntityType>
+        <EntityType Name="Salary">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserName" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="BasicSalary" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="AttendanceBonus" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="Fine" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="SalaryTime" Type="DateTime" Precision="3" />
+          <Property Name="SalarySum" Type="Decimal" Precision="19" Scale="4" />
+        </EntityType>
+        <EntityType Name="SystemLog">
+          <Key>
+            <PropertyRef Name="LogID" />
+          </Key>
+          <Property Name="LogID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="LogName" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="LogTime" Type="DateTime" Precision="3" />
+          <Property Name="LogOperation" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="UserInfo">
+          <Key>
+            <PropertyRef Name="UserID" />
+          </Key>
+          <Property Name="UserID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DepartmentID" Type="Int32" />
+          <Property Name="RoleID" Type="Int32" />
+          <Property Name="UserNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="LoginName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="LoginPwd" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="UserName" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="UserAge" Type="Int32" />
+          <Property Name="UserSex" Type="Int32" />
+          <Property Name="UserTel" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="UserAddress" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="UserIphone" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="UserRemarks" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="UserStatr" Type="Int32" />
+          <Property Name="EntryTime" Type="DateTime" Precision="3" />
+          <Property Name="DimissionTime" Type="DateTime" Precision="3" />
+          <Property Name="BasePay" Type="Decimal" Precision="19" Scale="4" />
+        </EntityType>
+        <EntityContainer Name="HRCEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Assessment" EntityType="Self.Assessment" />
+          <EntitySet Name="AttendanceSheet" EntityType="Self.AttendanceSheet" />
+          <EntitySet Name="CategoryItems" EntityType="Self.CategoryItems" />
+          <EntitySet Name="Department" EntityType="Self.Department" />
+          <EntitySet Name="Leave" EntityType="Self.Leave" />
+          <EntitySet Name="Notice" EntityType="Self.Notice" />
+          <EntitySet Name="Overtime" EntityType="Self.Overtime" />
+          <EntitySet Name="OvertimeCheck" EntityType="Self.OvertimeCheck" />
+          <EntitySet Name="PayRise" EntityType="Self.PayRise" />
+          <EntitySet Name="PaySlip" EntityType="Self.PaySlip" />
+          <EntitySet Name="Role" EntityType="Self.Role" />
+          <EntitySet Name="Salary" EntityType="Self.Salary" />
+          <EntitySet Name="SystemLog" EntityType="Self.SystemLog" />
+          <EntitySet Name="UserInfo" EntityType="Self.UserInfo" />
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="HRCModelStoreContainer" CdmEntityContainer="HRCEntities">
+          <EntitySetMapping Name="Assessment">
+            <EntityTypeMapping TypeName="HRCModel.Assessment">
+              <MappingFragment StoreEntitySet="Assessment">
+                <ScalarProperty Name="AssessmentID" ColumnName="AssessmentID" />
+                <ScalarProperty Name="PerformanceTime" ColumnName="PerformanceTime" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="WorkSummary" ColumnName="WorkSummary" />
+                <ScalarProperty Name="UpperGoal" ColumnName="UpperGoal" />
+                <ScalarProperty Name="CompletionDegree" ColumnName="CompletionDegree" />
+                <ScalarProperty Name="ExaminationItems" ColumnName="ExaminationItems" />
+                <ScalarProperty Name="NextStageObjectives" ColumnName="NextStageObjectives" />
+                <ScalarProperty Name="PerformanceScore" ColumnName="PerformanceScore" />
+                <ScalarProperty Name="comments" ColumnName="comments" />
+                <ScalarProperty Name="perstate" ColumnName="perstate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AttendanceSheet">
+            <EntityTypeMapping TypeName="HRCModel.AttendanceSheet">
+              <MappingFragment StoreEntitySet="AttendanceSheet">
+                <ScalarProperty Name="AttendanceID" ColumnName="AttendanceID" />
+                <ScalarProperty Name="AttendanceStartTime" ColumnName="AttendanceStartTime" />
+                <ScalarProperty Name="AttendanceType" ColumnName="AttendanceType" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="DepartmentID" ColumnName="DepartmentID" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="ClockTime" ColumnName="ClockTime" />
+                <ScalarProperty Name="ClockOutTime" ColumnName="ClockOutTime" />
+                <ScalarProperty Name="Workinghours" ColumnName="Workinghours" />
+                <ScalarProperty Name="remake" ColumnName="remake" />
+                <ScalarProperty Name="Late" ColumnName="Late" />
+                <ScalarProperty Name="Absenteeism" ColumnName="Absenteeism" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CategoryItems">
+            <EntityTypeMapping TypeName="HRCModel.CategoryItems">
+              <MappingFragment StoreEntitySet="CategoryItems">
+                <ScalarProperty Name="CID" ColumnName="CID" />
+                <ScalarProperty Name="C_Category" ColumnName="C_Category" />
+                <ScalarProperty Name="CI_ID" ColumnName="CI_ID" />
+                <ScalarProperty Name="CI_Name" ColumnName="CI_Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Department">
+            <EntityTypeMapping TypeName="HRCModel.Department">
+              <MappingFragment StoreEntitySet="Department">
+                <ScalarProperty Name="DepartmentID" ColumnName="DepartmentID" />
+                <ScalarProperty Name="DepartmentName" ColumnName="DepartmentName" />
+                <ScalarProperty Name="People" ColumnName="People" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Leave">
+            <EntityTypeMapping TypeName="HRCModel.Leave">
+              <MappingFragment StoreEntitySet="Leave">
+                <ScalarProperty Name="LeaveID" ColumnName="LeaveID" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="LeaveState" ColumnName="LeaveState" />
+                <ScalarProperty Name="LeaveTime" ColumnName="LeaveTime" />
+                <ScalarProperty Name="LeaveStartTime" ColumnName="LeaveStartTime" />
+                <ScalarProperty Name="LeaveEndTime" ColumnName="LeaveEndTime" />
+                <ScalarProperty Name="LeaveHalfDay" ColumnName="LeaveHalfDay" />
+                <ScalarProperty Name="LeaveDays" ColumnName="LeaveDays" />
+                <ScalarProperty Name="LeaveReason" ColumnName="LeaveReason" />
+                <ScalarProperty Name="ApproverID" ColumnName="ApproverID" />
+                <ScalarProperty Name="ApprovalTime" ColumnName="ApprovalTime" />
+                <ScalarProperty Name="ApproverReason" ColumnName="ApproverReason" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Notice">
+            <EntityTypeMapping TypeName="HRCModel.Notice">
+              <MappingFragment StoreEntitySet="Notice">
+                <ScalarProperty Name="NoticeID" ColumnName="NoticeID" />
+                <ScalarProperty Name="NoticeType" ColumnName="NoticeType" />
+                <ScalarProperty Name="NoticeTitle" ColumnName="NoticeTitle" />
+                <ScalarProperty Name="NoticeContent" ColumnName="NoticeContent" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="NoticeStateTime" ColumnName="NoticeStateTime" />
+                <ScalarProperty Name="NoticeEndTime" ColumnName="NoticeEndTime" />
+                <ScalarProperty Name="NoticeState" ColumnName="NoticeState" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Overtime">
+            <EntityTypeMapping TypeName="HRCModel.Overtime">
+              <MappingFragment StoreEntitySet="Overtime">
+                <ScalarProperty Name="OvertimeID" ColumnName="OvertimeID" />
+                <ScalarProperty Name="OvertimeStateTime" ColumnName="OvertimeStateTime" />
+                <ScalarProperty Name="OvertimeEndTime" ColumnName="OvertimeEndTime" />
+                <ScalarProperty Name="OvertimeDuration" ColumnName="OvertimeDuration" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="ApplyTime" ColumnName="ApplyTime" />
+                <ScalarProperty Name="OvertimeState" ColumnName="OvertimeState" />
+                <ScalarProperty Name="ApproverReason" ColumnName="ApproverReason" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OvertimeCheck">
+            <EntityTypeMapping TypeName="HRCModel.OvertimeCheck">
+              <MappingFragment StoreEntitySet="OvertimeCheck">
+                <ScalarProperty Name="ApprovalID" ColumnName="ApprovalID" />
+                <ScalarProperty Name="LeaveID" ColumnName="LeaveID" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="ApprovalType" ColumnName="ApprovalType" />
+                <ScalarProperty Name="DepartmentalAudit" ColumnName="DepartmentalAudit" />
+                <ScalarProperty Name="DepartmentalAuditRemarks" ColumnName="DepartmentalAuditRemarks" />
+                <ScalarProperty Name="ManagerAudit" ColumnName="ManagerAudit" />
+                <ScalarProperty Name="ManagerAuditRemarks" ColumnName="ManagerAuditRemarks" />
+                <ScalarProperty Name="GeneralManagerAudit" ColumnName="GeneralManagerAudit" />
+                <ScalarProperty Name="GeneralManagerAuditRemarks" ColumnName="GeneralManagerAuditRemarks" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PayRise">
+            <EntityTypeMapping TypeName="HRCModel.PayRise">
+              <MappingFragment StoreEntitySet="PayRise">
+                <ScalarProperty Name="PayRiseID" ColumnName="PayRiseID" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="PayRiseMoney" ColumnName="PayRiseMoney" />
+                <ScalarProperty Name="Reason" ColumnName="Reason" />
+                <ScalarProperty Name="ApplicationTime" ColumnName="ApplicationTime" />
+                <ScalarProperty Name="ApprovalContent" ColumnName="ApprovalContent" />
+                <ScalarProperty Name="ApprovalState" ColumnName="ApprovalState" />
+                <ScalarProperty Name="ApprovalTime" ColumnName="ApprovalTime" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PaySlip">
+            <EntityTypeMapping TypeName="HRCModel.PaySlip">
+              <MappingFragment StoreEntitySet="PaySlip">
+                <ScalarProperty Name="PaySlipID" ColumnName="PaySlipID" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="Prize" ColumnName="Prize" />
+                <ScalarProperty Name="LeaveMoney" ColumnName="LeaveMoney" />
+                <ScalarProperty Name="OvertimeMoney" ColumnName="OvertimeMoney" />
+                <ScalarProperty Name="LateMoney" ColumnName="LateMoney" />
+                <ScalarProperty Name="AdvanceMoney" ColumnName="AdvanceMoney" />
+                <ScalarProperty Name="Absence" ColumnName="Absence" />
+                <ScalarProperty Name="fine" ColumnName="fine" />
+                <ScalarProperty Name="Sa_Bonus" ColumnName="Sa_Bonus" />
+                <ScalarProperty Name="Sa_Time" ColumnName="Sa_Time" />
+                <ScalarProperty Name="Sa_TotalSalary" ColumnName="Sa_TotalSalary" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Role">
+            <EntityTypeMapping TypeName="HRCModel.Role">
+              <MappingFragment StoreEntitySet="Role">
+                <ScalarProperty Name="RoleID" ColumnName="RoleID" />
+                <ScalarProperty Name="RoleName" ColumnName="RoleName" />
+                <ScalarProperty Name="RoleNumber" ColumnName="RoleNumber" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Salary">
+            <EntityTypeMapping TypeName="HRCModel.Salary">
+              <MappingFragment StoreEntitySet="Salary">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="BasicSalary" ColumnName="BasicSalary" />
+                <ScalarProperty Name="AttendanceBonus" ColumnName="AttendanceBonus" />
+                <ScalarProperty Name="Fine" ColumnName="Fine" />
+                <ScalarProperty Name="SalaryTime" ColumnName="SalaryTime" />
+                <ScalarProperty Name="SalarySum" ColumnName="SalarySum" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SystemLog">
+            <EntityTypeMapping TypeName="HRCModel.SystemLog">
+              <MappingFragment StoreEntitySet="SystemLog">
+                <ScalarProperty Name="LogID" ColumnName="LogID" />
+                <ScalarProperty Name="LogName" ColumnName="LogName" />
+                <ScalarProperty Name="LogTime" ColumnName="LogTime" />
+                <ScalarProperty Name="LogOperation" ColumnName="LogOperation" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserInfo">
+            <EntityTypeMapping TypeName="HRCModel.UserInfo">
+              <MappingFragment StoreEntitySet="UserInfo">
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="DepartmentID" ColumnName="DepartmentID" />
+                <ScalarProperty Name="RoleID" ColumnName="RoleID" />
+                <ScalarProperty Name="UserNumber" ColumnName="UserNumber" />
+                <ScalarProperty Name="LoginName" ColumnName="LoginName" />
+                <ScalarProperty Name="LoginPwd" ColumnName="LoginPwd" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="UserAge" ColumnName="UserAge" />
+                <ScalarProperty Name="UserSex" ColumnName="UserSex" />
+                <ScalarProperty Name="UserTel" ColumnName="UserTel" />
+                <ScalarProperty Name="UserAddress" ColumnName="UserAddress" />
+                <ScalarProperty Name="UserIphone" ColumnName="UserIphone" />
+                <ScalarProperty Name="UserRemarks" ColumnName="UserRemarks" />
+                <ScalarProperty Name="UserStatr" ColumnName="UserStatr" />
+                <ScalarProperty Name="EntryTime" ColumnName="EntryTime" />
+                <ScalarProperty Name="DimissionTime" ColumnName="DimissionTime" />
+                <ScalarProperty Name="BasePay" ColumnName="BasePay" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="无" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

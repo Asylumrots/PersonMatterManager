@@ -1,0 +1,725 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Matrix Admin</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="~/wwwroot/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/wwwroot/css/bootstrap-responsive.min.css" />
+    <link rel="stylesheet" href="~/wwwroot/css/uniform.css" />
+    <link rel="stylesheet" href="~/wwwroot/css/select2.css" />
+    <link rel="stylesheet" href="~/wwwroot/css/matrix-style.css" />
+    <link rel="stylesheet" href="~/wwwroot/css/matrix-media.css" />
+    <link href="~/wwwroot/font-awesome/css/font-awesome.css" rel="stylesheet" />
+    <link href='http://www.jinliniuan.com/css/css?family=Open+Sans:400,700,800' rel='stylesheet' type='text/css'>
+    <style>
+        .MySelect {
+            position:relative;
+            top:10px;
+            left:10px;
+        }
+    </style>
+</head>
+<body>
+    @RenderPage("~/Views/Menu.cshtml")
+    <div id="content">
+        <div id="content-header">
+            <div id="breadcrumb"> <a href="#" class="tip-bottom" data-original-title="Go to Home"><i class="icon-home"></i> 主页</a> <a href="#" class="current">员工管理</a> </div>
+
+        </div>
+        <div class="container-fluid">
+            <div class="row-fluid">
+                <div class="span12">
+
+                    <div class="widget-box">
+                        <div class="widget-title">
+                            <span class="icon"> <i class="icon-th"></i> </span>
+                            <h5>员工管理</h5>
+                            <button class="btn btn-success" data-toggle="modal" data-target="#AddModal" onclick="GetSelectInfo(1)"><span class="icon-plus"></span></button>
+                            <button class="btn btn-info"  onclick="GetEditInfo()"><span class="icon-pencil"></span></button>
+                            <button id="EditBtn" data-toggle="modal" data-target="#EdtiModal" style="display:none;"></button>
+                            <button class="btn btn-danger" data-toggle="modal" data-target="#DelModal"><span class="icon-remove"></span></button>
+
+                        </div>
+                        <div class="widget-content ">
+                            <table class="table table-bordered table-striped with-check">
+                                <thead>
+                                    <tr>
+                                        <th><div style="position:relative;left:2px;bottom:2px"><div class="checker" id="uniform-title-table-checkbox"><span><input type="checkbox" id="title-table-checkbox" name="title-table-checkbox" style="opacity: 0;"></span></div></div></th>
+                                        <th>编号</th>
+                                        <th>姓名</th>
+                                        <th>部门</th>
+                                        <th>性别</th>
+                                        <th>年龄</th>
+                                        <th>联系电话</th>
+                                        <th>入职时间</th>
+                                        <th>基本工资</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tbodys">
+                                    @*<tr>
+                                        <td><div class="checker" id="uniform-undefined"><span ><input type="checkbox" style="opacity: 0;"></span></div></td>
+                                        <td style="text-align:center">Row 1</td>
+                                        <td style="text-align:center">Row 2</td>
+                                    </tr>
+                                    <tr>
+                                        <td><div class="checker" id="uniform-undefined"><span><input type="checkbox" style="opacity: 0;"></span></div></td>
+                                        <td style="text-align:center">Row 1</td>
+                                        <td style="text-align:center">Row 2</td>
+                                    </tr>
+                                    <tr>
+                                        <td><div class="checker" id="uniform-undefined"><span><input type="checkbox" style="opacity: 0;"></span></div></td>
+                                        <td style="text-align:center">Row 1</td>
+                                        <td style="text-align:center">Row 2</td>
+                                    </tr>
+                                    <tr>
+                                        <td><div class="" id="" style="text-align:center"><input type="checkbox" style="resize:both"></div></td>
+                                        <td style="text-align:center">Row 11</td>
+                                        <td style="text-align:center">Row 21</td>
+                                    </tr>*@
+                                </tbody>
+                            </table>
+                        </div>
+                        <div style="width:965px;font-size:12px;margin:5px;display:inline-block;position:relative;bottom:10px">
+                            每页显示
+                            <div>
+                                <select id="pageSelect" style="width:52px;">
+                                    <option value="5">5</option>
+                                    <option value="10">10</option>
+                                    <option value="20">20</option>
+                                </select>
+                            </div>
+                            条数据
+                        </div>
+
+                        <div class="pagination alternate" style="display:inline-block">
+                            <ul id="pages">
+                                @*<li class="disabled"><a href="#">上一页</a></li>
+                                <li class="active"> <a href="#">1</a> </li>
+                                <li><a href="">2</a></li>
+                                <li><a href="#" onclick="">3</a></li>
+                                <li><a href="#">4</a></li>
+                                <li><a href="#">5 </a></li>
+                                <li><a href="#">下一页</a></li>*@
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 模态框示例（Modal） -->
+        <form method="post" action="" class="form-horizontal" role="form" id="AddForm" @*onsubmit="return AddDepartment()"*@ style="margin: 20px;">
+            <div class="modal fade" id="AddModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                                ×
+                            </button>
+                            <h4 class="modal-title" id="myModalLabel">
+                                添加员工
+                            </h4>
+                        </div>
+                        <div class="modal-body">
+                            <form class="form-horizontal" role="form">
+                                <div class="form-group" style="height:40px;">
+                                    <label for="UserName" class="col-sm-3 control-label">图片:</label>
+                                    <div class="col-sm-9">
+                                        <input type="file" class="form-control" id="files" name="files" value=""
+                                               placeholder="" style="margin-left:10px;margin-top:10px;width:300px">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="UserName" class="col-sm-3 control-label">姓名:</label>
+                                    <div class="col-sm-9">
+                                        <input type="text" class="form-control" id="UserName" name="UserName" value=""
+                                               placeholder="请输入姓名" style="margin-left:10px;margin-top:10px">
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="departmentselect" class="col-sm-3 control-label">部门:</label>
+                                    <div class="col-sm-9 MySelelct" style="height:40px;">
+                                        <select id="departmentselect" name="DepartmentID" class="MySelect">
+                                            <option value="-1">请选择</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="roleselect" class="col-sm-3 control-label">角色:</label>
+                                    <div class="col-sm-9 MySelelct" style="height:40px;">
+                                        <select id="roleselect" name="RoleID" class="MySelect">
+                                            <option value="-1">请选择</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="UserAge" class="col-sm-3 control-label">年龄:</label>
+                                    <div class="col-sm-9">
+                                        <input type="text" class="form-control" id="UserAge" name="UserAge" value=""
+                                               placeholder="请输入年龄" style="margin-left:10px;margin-top:10px">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="sexselect" class="col-sm-3 control-label">性别:</label>
+                                    <div class="col-sm-9 MySelelct" style="height:40px;">
+                                        <select id="sexselect" name="UserSex" class="MySelect">
+                                            <option value="-1">请选择</option>
+                                            <option value="1">男</option>
+                                            <option value="0">女</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="UserTel" class="col-sm-3 control-label">电话:</label>
+                                    <div class="col-sm-9">
+                                        <input type="text" class="form-control" id="UserTel" name="UserTel" value=""
+                                               placeholder="请输入电话" style="margin-left:10px;margin-top:10px">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="UserAddress" class="col-sm-3 control-label">地址:</label>
+                                    <div class="col-sm-9">
+                                        <input type="text" class="form-control" id="UserAddress" name="UserAddress" value=""
+                                               placeholder="请输入地址" style="margin-left:10px;margin-top:10px">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="UserNumber" class="col-sm-3 control-label">编号:</label>
+                                    <div class="col-sm-9">
+                                        <input type="text" class="form-control" id="UserNumber" name="UserNumber" value=""
+                                               placeholder="请输入编号" style="margin-left:10px;margin-top:10px">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="BasePay" class="col-sm-3 control-label">工资:</label>
+                                    <div class="col-sm-9">
+                                        <input type="text" class="form-control" id="BasePay" name="BasePay" value=""
+                                               placeholder="请输入工资" style="margin-left:10px;margin-top:10px">
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <label id="errortxt" style="display:inline-block;margin-right:37%;color:red"></label>
+                            <button id="closeAdd" type="button" class="btn btn-default" data-dismiss="modal">
+                                关闭
+                            </button>
+                            <button type="button" onclick="AddPerson()" class="btn btn-primary">
+                                提交
+                            </button><span id="tip"> </span>
+                        </div>
+                    </div><!-- /.modal-content -->
+                </div><!-- /.modal -->
+            </div>
+        </form>
+
+
+        <!-- 模态框示例（Modal） -->
+        <form method="post" action="" class="form-horizontal" role="form" id="EditForm" style="margin: 20px;">
+            <div class="modal fade" id="EdtiModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                                ×
+                            </button>
+                            <h4 class="modal-title" id="myModalLabel">
+                                修改员工
+                            </h4>
+                        </div>
+                        <div class="modal-body"  style="display:none" id="editbox">
+                            <form class="form-horizontal" role="form">
+                                <div class="form-group" style="display:none">
+                                    <label for="UserID2" class="col-sm-3 control-label">姓名:</label>
+                                    <div class="col-sm-9">
+                                        <input type="text" class="form-control" id="UserID2" name="UserID" value=""
+                                               placeholder="" style="margin-left:10px;margin-top:10px" readonly>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="UserName2" class="col-sm-3 control-label">姓名:</label>
+                                    <div class="col-sm-9">
+                                        <input type="text" class="form-control" id="UserName2" name="UserName" value=""
+                                               placeholder="请输入姓名" style="margin-left:10px;margin-top:10px">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="departmentselect2" class="col-sm-3 control-label">部门:</label>
+                                    <div class="col-sm-9 MySelelct" style="height:40px;">
+                                        <select id="departmentselect2" name="DepartmentID" class="MySelect">
+                                            <option value="-1">请选择</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="roleselect2" class="col-sm-3 control-label">角色:</label>
+                                    <div class="col-sm-9 MySelelct" style="height:40px;">
+                                        <select id="roleselect2" name="RoleID" class="MySelect">
+                                            <option value="-1">请选择</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="UserAge2" class="col-sm-3 control-label">年龄:</label>
+                                    <div class="col-sm-9">
+                                        <input type="text" class="form-control" id="UserAge2" name="UserAge" value=""
+                                               placeholder="请输入年龄" style="margin-left:10px;margin-top:10px">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="sexselect2" class="col-sm-3 control-label">性别:</label>
+                                    <div class="col-sm-9 MySelelct" style="height:40px;">
+                                        <select id="sexselect2" name="UserSex" class="MySelect">
+                                            <option value="-1">请选择</option>
+                                            <option value="1">男</option>
+                                            <option value="0">女</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="UserTel2" class="col-sm-3 control-label">电话:</label>
+                                    <div class="col-sm-9">
+                                        <input type="text" class="form-control" id="UserTel2" name="UserTel" value=""
+                                               placeholder="请输入电话" style="margin-left:10px;margin-top:10px">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="UserAddress2" class="col-sm-3 control-label">地址:</label>
+                                    <div class="col-sm-9">
+                                        <input type="text" class="form-control" id="UserAddress2" name="UserAddress" value=""
+                                               placeholder="请输入地址" style="margin-left:10px;margin-top:10px">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="UserNumber2" class="col-sm-3 control-label">编号:</label>
+                                    <div class="col-sm-9">
+                                        <input type="text" class="form-control" id="UserNumber2" name="UserNumber" value=""
+                                               placeholder="请输入编号" style="margin-left:10px;margin-top:10px">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="BasePay2" class="col-sm-3 control-label">工资:</label>
+                                    <div class="col-sm-9">
+                                        <input type="text" class="form-control" id="BasePay2" name="BasePay" value=""
+                                               placeholder="请输入工资" style="margin-left:10px;margin-top:10px">
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <label id="errortxt2" style="display:inline-block;margin-right:37%;color:red"></label>
+                            <button type="button" id="closeEdit" class="btn btn-default" data-dismiss="modal">
+                                关闭
+                            </button>
+                            <button type="button" onclick="ModifyPerson()" class="btn btn-primary">
+                                提交
+                            </button><span id="tip"> </span>
+                        </div>
+                    </div><!-- /.modal-content -->
+                </div><!-- /.modal -->
+            </div>
+        </form>
+
+        <!-- 模态框示例（Modal） -->
+        <form method="post" action="" class="form-horizontal" role="form" id="DelForm" @*onsubmit="return AddDepartment()"*@ style="margin: 20px;">
+            <div class="modal fade" id="DelModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="width:320px;margin-left:-10%">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                                ×
+                            </button>
+                            <h4 class="modal-title" id="myModalLabel">
+                                操作提示？
+                            </h4>
+                        </div>
+                        <div class="modal-body">
+                            <form class="form-horizontal" role="form">
+                                <div class="form-group">
+                                    <label for="DepartmentName" class="col-sm-3 control-label">确认要删除选中项吗？</label>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <label id="errortxt" style="display:inline-block;margin-right:37%;color:red"></label>
+                            <button type="button" id="closeDel" class="btn btn-default" data-dismiss="modal">
+                                取消
+                            </button>
+                            <button type="button" onclick="DelPerson()" class="btn btn-success">
+                                确认
+                            </button><span id="tip"> </span>
+                        </div>
+                    </div><!-- /.modal-content -->
+                </div><!-- /.modal -->
+            </div>
+        </form>
+
+
+        <button type="button" id="show" data-toggle="modal" data-target="#AlterModal" style="display:none"></button>
+        <form method="post" action="" class="form-horizontal" role="form" id="s" @*onsubmit="return AddDepartment()"*@ style="margin: 20px;">
+            <div class="modal fade" id="AlterModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="width:320px;margin-left:-10%">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                                ×
+                            </button>
+                            <h4 class="modal-title" id="myModalLabel">
+                                操作提示
+                            </h4>
+                        </div>
+                        <div class="modal-body">
+                            <form class="form-horizontal" role="form">
+                                <div class="form-group">
+                                    <label for="DepartmentName" class="col-sm-3 control-label" id="backtxt"></label>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <label id="errortxt" style="display:inline-block;margin-right:37%;color:red"></label>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">
+                                确认
+                            </button><span id="tip"> </span>
+                        </div>
+                    </div><!-- /.modal-content -->
+                </div><!-- /.modal -->
+            </div>
+        </form>
+
+    </div>
+    <!--Footer-part-->
+    <div class="row-fluid">
+        <div id="footer" class="span12"> 2013 &copy; Mafortrix Admin. More Templates <a href="http://www.jinliniuan.com/" target="_blank">金林苑</a></div>
+    </div>
+    <!--end-Footer-part-->
+    <script src="~/wwwroot/js/jquery.min.js"></script>
+    <script src="~/wwwroot/js/jquery.ui.custom.js"></script>
+    <script src="~/wwwroot/js/bootstrap.min.js"></script>
+    <script src="~/wwwroot/js/jquery.uniform.js"></script>
+    <script src="~/wwwroot/js/select2.min.js"></script>
+    <script src="~/wwwroot/js/jquery.dataTables.min.js"></script>
+    <script src="~/wwwroot/js/matrix.js"></script>
+    <script src="~/wwwroot/js/matrix.tables.js"></script>
+    <script>
+        $(function () {
+            
+            //$("#pages").children().eq(1).addClass("active")
+            $("#Person").css("background", "#27a9e3").children("a").css("color","white");
+            $("#s2id_autogen1").css("width", "60px");
+            $(".MySelect").css("display", "block");
+            $("#pageSelect").css("display", "block");
+            $(".select2-container").css("display", "none");
+            $("#uniform-UserPhoto").css("margin-left", "8px");
+            $("#uniform-UserPhoto").css("margin-top", "12px");
+
+            //change每页显示列数
+            $("#pageSelect").change(function () {
+                //console.log($(this).val());
+                pageSize = $(this).val();
+                GetPageInfo(pageIndex, pageSize);
+            })
+            
+        })
+        //初始化分页数据
+        var pageIndex = 1;
+        var pageSize = 5;
+        var totalIndex;
+        //获取页面显示第一页数据
+        GetPageInfo(pageIndex, pageSize);
+        
+        function data_string(str) {
+            var d = eval('new ' + str.substr(1, str.length - 2));
+            var ar_date = [d.getFullYear(), d.getMonth() + 1, d.getDate(), d.getHours(), d.getMinutes(), d.getSeconds()];
+            for (var i = 0; i < ar_date.length; i++) ar_date[i] = dFormat(ar_date[i]);
+            return ar_date.slice(0, 3).join('-') + ' ' + ar_date.slice(3).join(':');
+            function dFormat(i) { return i < 10 ? "0" + i.toString() : i; }
+        }
+
+        function GetPageInfo(PageIndex, PageSize) {
+            $.ajax({
+                type: "post",
+                async: false,
+                url: "/Person/GetPageInfo",
+                data: { PageIndex: PageIndex, PageSize: PageSize },
+                success: function (data) {
+                    $("#tbodys").empty();
+                    //加载数据
+                    ShowData(data.list);
+                    totalIndex = Math.ceil(data.num / pageSize);
+                    //加载页面栏
+                    ShowNva(PageSize, totalIndex, PageIndex);
+                    //去除所有active激发显示，并筛选当前页数的active
+                    for (var i = 0; i < $("#pages").children().length; i++) {
+                        $("#pages").children().eq(i).removeClass("active");
+                    }
+                    $("#pages li:contains(" + PageIndex + ")").addClass("active");
+                }
+            })
+        }
+
+        function ShowData(data) {
+            var html;
+            if (data.length == 0) {
+                html = '<tr><td colspan="9" style="text-align:center;">暂无数据</td></tr>';
+                $("#tbodys").append(html);
+            }
+            else {
+                for (var i = 0; i < data.length; i++) {
+                    var item = data[i];
+                    var sex = "";
+                    if (item.UserSex == 1) {
+                        sex = "男";
+                    }
+                    else {
+                        sex = "女";
+                    }
+                    html = '<tr><td><div style=""><input type="checkbox" style="height:15px;width:15px;position:relative;left:7px;bottom:2px"></div></td>' +
+                        '<td style="text-align:center">' + item.UserNumber +
+                        '</td><td style="text-align:center">' + item.UserName +
+                        '</td><td style="text-align:center">' + item.UserRemarks +
+                        '</td><td style="text-align:center">' + sex +
+                        '</td><td style="text-align:center">' + item.UserAge +
+                        '</td><td style="text-align:center">' + item.UserTel +
+                        '</td><td style="text-align:center">' + data_string(item.EntryTime) +
+                        '</td><td style="text-align:center">' + item.BasePay + '</td></tr >';
+                    $("#tbodys").append(html);
+                }
+            }
+        }
+
+        function ShowNva(PageSize, TotalIndex,PageIndex) {
+            var li = "";
+            //在选页数超过3时
+            if (PageIndex > 3) {
+                var num1, num2, num3, num4, num5;
+                num1 = PageIndex - 2;
+                num2 = PageIndex - 1;
+                num3 = PageIndex;
+                num4 = PageIndex + 1;
+                num5 = PageIndex + 2;
+                if (PageIndex == TotalIndex) {
+                    //console.log("最后一页")
+                    num1 -= 2;num2 -= 2;num3 -= 2;num4 -= 2;num5 -= 2;
+                }
+                else if (PageIndex == (TotalIndex - 1)) {
+                    //console.log("最后二页")
+                    num1 -= 1;num2 -= 1;num3 -= 1;num4 -= 1;num5 -= 1;
+                }
+                li = li + '<li><a onclick="GetPageInfo(' + num1 + ',' + PageSize + ')">' + num1 + '</a></li>';
+                li = li + '<li><a onclick="GetPageInfo(' + num2 + ',' + PageSize + ')">' + num2 + '</a></li>';
+                li = li + '<li><a onclick="GetPageInfo(' + num3 + ',' + PageSize + ')">' + num3 + '</a></li>';
+                li = li + '<li><a onclick="GetPageInfo(' + num4 + ',' + PageSize + ')">' + num4 + '</a></li>';
+                li = li + '<li><a onclick="GetPageInfo(' + num5 + ',' + PageSize + ')">' + num5 + '</a></li>';
+                //console.log(num3)
+                //console.log(li)
+            }
+            else {
+                for (var i = 1; TotalIndex > 0; TotalIndex--) {
+                    li = li + '<li><a onclick="GetPageInfo(' + i + ',' + PageSize + ')">' + i + '</a></li>';
+                    i++;
+                    //第一显示了5行就跳出循环
+                    if (i == 6) {
+                        break;
+                    }
+                }
+                //console.log(li)
+            }
+            $("#pages").empty();
+            //上一页下一页
+            var prenum = PageIndex - 1 <= 0 ? 1 : PageIndex - 1;
+            var nextnum = PageIndex + 1 > totalIndex ? totalIndex : PageIndex + 1;
+            var html = '<li><a onclick="GetPageInfo(' + prenum + ',' + PageSize + ')">上一页</a></li>' + li +
+                //'<li class="active"><a href="#">1</a></li>' +
+                '<li><a onclick="GetPageInfo(' + nextnum + ',' + PageSize + ')">下一页</a></li>';
+            $("#pages").append(html);
+        }
+        
+        function GetSelectInfo(n) {
+            if (n == 1) {
+                $.ajax({
+                    type: "post",
+                    url: "/Person/GetDepSelect",
+                    success: function (data) {
+                        for (var i = 0; i < data.length; i++) {
+                            var item = data[i];
+                            var html = '<option value="' + item.DepartmentID + '">' + item.DepartmentName + '</option>';
+                            $("#departmentselect").append(html);
+                        }
+                    }
+                });
+                $.ajax({
+                    type: "post",
+                    url: "/Person/GetRoleSelect",
+                    success: function (data) {
+                        for (var i = 0; i < data.length; i++) {
+                            var item = data[i];
+                            var html = '<option value="' + item.RoleID + '">' + item.RoleName + '</option>';
+                            $("#roleselect").append(html);
+                        }
+                    }
+                });
+            } else if (n==2) {
+                $.ajax({
+                    type: "post",
+                    url: "/Person/GetDepSelect",
+                    success: function (data) {
+                        for (var i = 0; i < data.length; i++) {
+                            var item = data[i];
+                            var html = '<option value="' + item.DepartmentID + '">' + item.DepartmentName + '</option>';
+                            $("#departmentselect2").append(html);
+                        }
+                    }
+                });
+                $.ajax({
+                    type: "post",
+                    url: "/Person/GetRoleSelect",
+                    success: function (data) {
+                        for (var i = 0; i < data.length; i++) {
+                            var item = data[i];
+                            var html = '<option value="' + item.RoleID + '">' + item.RoleName + '</option>';
+                            $("#roleselect2").append(html);
+                        }
+                    }
+                });
+            }
+            
+        }
+        
+
+        function AddPerson() {
+            var formData = new FormData(document.getElementById("AddForm"));
+            $.ajax({
+                type: "post",
+                async: false,
+                cache: false,
+                contentType: false,
+                processData: false,
+                url: "/Person/AddPerson",
+                data: formData,
+                success: function (data) {
+                    $("#closeAdd").trigger("click");
+                    $("#show").trigger("click");
+                    if (data == "True") {
+                        $("#backtxt").text("添加成功！");
+                    }
+                    else {
+                        $("#backtxt").text("添加失败！");
+                    }
+                }
+            });
+        }
+        $(function () {
+            $('#AlterModal').on('hide.bs.modal', function () {
+                location.reload();
+            })
+        });
+
+        function GetEditInfo() {
+            if ($("#tbodys input:checked").length > 1 || $("#tbodys input:checked").length == 0) {
+                $("#show").trigger("click");
+                $("#backtxt").text("请选中行，请勿选中多行！");
+                return false;
+            }
+            else {
+                $("#EditBtn").trigger("click");
+                //默认挡住添加框先隐藏，点击时显示
+                $("#editbox").css("display", "block");
+                GetSelectInfo(2);
+                var numbers = $("#tbodys input:checked").parent().parent().parent().parent().next().text();
+                var names = $("#tbodys input:checked").parent().parent().parent().parent().next().next().text();
+                console.log(numbers);
+                console.log(names);
+                $.ajax({
+                    type: "post",
+                    url: "/Person/GetPersonInfo",
+                    data: { number: numbers, name: names },
+                    success: function (data) {
+                        $("#UserName2").val(data.UserName);
+                        $("#UserAge2").val(data.UserAge);
+                        $("#UserTel2").val(data.UserTel);
+                        $("#UserNumber2").val(data.UserNumber);
+                        $("#UserAddress2").val(data.UserAddress);
+                        $("#BasePay2").val(data.BasePay);
+                        $("#UserID2").val(data.UserID);
+                        //$(" select option[value='"+tem+"']").attr("selected","selected");  
+                        $("#departmentselect2").find("option").each(function () {
+                            if ($(this).val() == data.DepartmentID) {
+                                $(this).attr("selected", true);
+                            } else {
+                                $(this).attr("selected", false);
+                            }
+                        });
+                        $("#roleselect2").find("option").each(function () {
+                            if ($(this).val() == data.RoleID) {
+                                $(this).attr("selected", true);
+                            } else {
+                                $(this).attr("selected", false);
+                            }
+                        });
+                        $("#sexselect2").find("option").each(function () {
+                            if ($(this).val() == data.UserSex) {
+                                $(this).attr("selected", true);
+                            } else {
+                                $(this).attr("selected", false);
+                            }
+                        });
+                    }
+                });
+            }
+        }
+
+        function ModifyPerson() {
+            var formData = new FormData(document.getElementById("EditForm"));
+            $.ajax({
+                type: "post",
+                async: false,
+                cache: false,
+                contentType: false,
+                processData: false,
+                url: "/Person/ModifyPerson",
+                data: formData,
+                success: function (data) {
+                    $("#closeEdit").trigger("click");
+                    $("#show").trigger("click");
+                    if (data == "True") {
+                        $("#backtxt").text("修改成功！");
+                    }
+                    else {
+                        $("#backtxt").text("修改失败！");
+                    }
+                }
+            });
+        }
+
+        function DelPerson() {
+            var numbers = new Array();
+            var names = new Array();
+            for (var i = 0; i < $("#tbodys input:checked").length; i++) {
+                numbers[i] = $("#tbodys input:checked").eq(i).parent().parent().next().text();
+                console.log(numbers[i])
+            }
+            for (var i = 0; i < $("#tbodys input:checked").length; i++) {
+                names[i] = $("#tbodys input:checked").eq(i).parent().parent().next().next().text();
+                console.log(names[i])
+            }
+            $.ajax({
+                type: "post",
+                url: "/Person/DelPerson",
+                data: { number: numbers, name:names },
+                success: function (data) {
+                    $("#closeDel").trigger("click");
+                    $("#show").trigger("click");
+                    if (data == "True") {
+                        $("#backtxt").text("删除成功！");
+                    }
+                    else {
+                        $("#backtxt").text("删除失败！");
+                    }
+                }
+            })
+        }
+    </script>
+</body>
+</html>

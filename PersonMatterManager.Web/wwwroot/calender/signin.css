@@ -1,0 +1,116 @@
+.top {
+  width: 100%;
+  height: 12rem;
+  background: #007aff;
+  margin-bottom: .8rem;
+  overflow: hidden;
+}
+.top .out-1 {
+  width: 8rem;
+  height: 8rem;
+  border-radius: 100%;
+  -webkit-border-radius: 100%;
+  background: rgba(255, 255, 255, 0.4);
+  margin: 1rem auto 0 auto;
+}
+.top .out-1 .out-2 {
+  width: 7rem;
+  height: 7rem;
+  border-radius: 100%;
+  -webkit-border-radius: 100%;
+  background: #ffffff;
+  margin: 0 auto;
+}
+.top .out-1 .out-2 .signBtn {
+  width: 6.2rem;
+  height: 6.2rem;
+  border-radius: 100%;
+  -webkit-border-radius: 100%;
+  border: 1px #7ebdff solid;
+}
+.top .out-1 .out-2 .signBtn strong,
+.top .out-1 .out-2 .signBtn span {
+  display: block;
+  width: 85%;
+  margin: 0 auto;
+  text-align: center;
+  color: #007aff;
+}
+.top .out-1 .out-2 .signBtn strong {
+  height: 3.5rem;
+  line-height: 4.5rem;
+  font-weight: 600;
+  border-bottom: 1px #eee solid;
+}
+.top .out-1 .out-2 .signBtn span {
+  height: 2.5rem;
+  line-height: 2.5rem;
+  font-size: .9rem;
+  line-height: 2rem !important;
+}
+.top .out-1:active {
+  animation: sign .25s forwards;
+  -webkit-animation: sign .25s forwards;
+}
+.tips {
+  position: absolute;
+  top: 10rem;
+  z-index: 999;
+  width: 100%;
+  color: #fff;
+  font-size: .9rem;
+  text-align: center;
+  padding-bottom: .5rem;
+}
+.Calendar {
+  background: #fff;
+  padding-bottom: 1rem;
+}
+.Calendar #toyear {
+  border-bottom: 1px #e7e7e7 solid;
+  width: 96%;
+  margin: 0 auto;
+  height: 2.5rem;
+  text-align: center;
+  color: #333;
+  font-size: .95rem;
+}
+.Calendar #toyear .year-month {
+  height: 100%;
+  line-height: 2.5rem;
+}
+.Calendar #toyear #idCalendarPre,
+.Calendar #toyear #idCalendarNext {
+  height: 100%;
+  line-height: 2.5rem;
+  padding: 0 2rem;
+  text-align: center;
+  font-size: .85rem;
+  color: #999;
+}
+.Calendar table,
+.Calendar tr,
+.Calendar td {
+  border: 0;
+}
+.Calendar table {
+  width: 96%;
+  margin: 0 auto;
+}
+.Calendar table tr {
+  text-align: center;
+  height: 2rem;
+}
+.Calendar table tr td span {
+  margin: 0 auto;
+  display: block;
+  line-height: 1.6rem;
+  width: 1.5rem;
+  height: 1.5rem;
+  font-size: .9rem;
+  border-radius: 100%;
+}
+.Calendar table tr .onToday span {
+  background: #1485ff;
+  color: #fff;
+}

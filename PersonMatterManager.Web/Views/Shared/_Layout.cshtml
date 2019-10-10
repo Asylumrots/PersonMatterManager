@@ -1,0 +1,197 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <title>@ViewBag.Title</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="~/wwwroot/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/wwwroot/css/bootstrap-responsive.min.css" />
+    <link rel="stylesheet" href="~/wwwroot/css/fullcalendar.css" />
+    <link href="~/wwwroot/css/select2.css" rel="stylesheet" />
+    <link href="~/wwwroot/css/uniform.css" rel="stylesheet" />
+    <link rel="stylesheet" href="~/wwwroot/css/matrix-style.css" />
+    <link rel="stylesheet" href="~/wwwroot/css/matrix-media.css" />
+    <link href="~/wwwroot/font-awesome/css/font-awesome.css" rel="stylesheet" />
+    <link rel="stylesheet" href="~/wwwroot/css/jquery.gritter.css" />
+    <link href='http://www.jinliniuan.com/css/css?family=Open+Sans:400,700,800' rel='stylesheet' type='text/css'>
+</head>
+<body>
+
+    <!--Header-part-->
+    <div id="header">
+        <h1><a href="dashboard.html">Matrix Admin</a></h1>
+    </div>
+    <!--close-Header-part-->
+    <!--top-Header-menu-->
+    <div id="user-nav" class="navbar navbar-inverse">
+        <ul class="nav">
+            <li class=""><a title="" href="#"><i class="icon icon-key"></i> <span class="text">修改密码</span></a></li>
+            <li class=""><a title="" href="login.html"><i class="icon icon-share-alt"></i> <span class="text">退出</span></a></li>
+        </ul>
+    </div>
+    <!--close-top-Header-menu-->
+    <!--start-top-serch-->
+    <div id="search">
+        <input type="text" placeholder="Search here..." />
+        <button type="submit" class="tip-bottom" title="Search"><i class="icon-search icon-white"></i></button>
+    </div>
+    <!--close-top-serch-->
+    <!--sidebar-menu-->
+    <div id="sidebar">
+        <a href="#" class="visible-phone"><i class="icon icon-home"></i> Dashboard</a>
+        <ul>
+            <li class="submenu">
+                <a href="#"><i class="icon icon-home"></i> <span>员工资料管理</span></a>
+                <ul>
+                    <li><a href="index2.html">个人信息</a></li>
+                    <li><a href="gallery.html">查询同事信息</a></li>
+                    <li><a href="calendar.html">员工管理</a></li>
+                </ul>
+            </li>
+            <li> <a href="charts.html"><i class="icon icon-signal"></i> <span>请假管理</span></a> </li>
+            <li class="submenu">
+                <a href="#"><i class="icon icon-inbox"></i> <span>考勤管理</span></a>
+                <ul>
+                    <li><a href="error403.html">签到</a></li>
+                    <li><a href="error404.html">查看本日考勤</a></li>
+                    <li><a href="error405.html">查看考勤记录</a></li>
+                </ul>
+            </li>
+            <li><a href="/Department/Index"><i class="icon icon-tint"></i> <span>部门管理</span></a></li>
+            <li class="submenu">
+                <a href="#"><i class="icon icon-th-list"></i> <span>加班管理</span></a>
+                <ul>
+                    <li><a href="form-common.html">申请加班</a></li>
+                    <li><a href="form-validation.html">加班审核</a></li>
+                </ul>
+            </li>
+            <li class="submenu">
+                <a href="#"><i class="icon icon-file"></i> <span>业绩评定</span></a>
+                <ul>
+                    <li><a href="form-common.html">填写业绩报告</a></li>
+                    <li><a href="form-validation.html">审核业绩报告</a></li>
+                    <li><a href="form-validation.html">部门年度汇总</a></li>
+                </ul>
+            </li>
+
+            <li class="submenu">
+                <a href="#"><i class="icon icon-file"></i> <span>薪资管理</span></a>
+                <ul>
+                    <li><a href="form-common.html">查看本月薪资</a></li>
+                    <li><a href="form-validation.html">员工薪资</a></li>
+                    <li><a href="form-validation.html">申请加薪</a></li>
+                    <li><a href="form-validation.html">加薪审核</a></li>
+                    <li><a href="form-validation.html">指定薪资(人事经理)</a></li>
+                </ul>
+            </li>
+            <li class="submenu">
+                <a href="#"><i class="icon icon-info-sign"></i> <span>公告管理</span></a>
+                <ul>
+                    <li><a href="error403.html">通知管理</a></li>
+                    <li><a href="error404.html">通知列表</a></li>
+                </ul>
+            </li>
+            <li class="content">
+                <span>Monthly Bandwidth Transfer</span>
+                <div class="progress progress-mini progress-danger active progress-striped">
+                    <div style="width: 77%;" class="bar"></div>
+                </div>
+                <span class="percent">77%</span>
+                <div class="stat">21419.94 / 14000 MB</div>
+            </li>
+            <li class="content">
+                <span>Disk Space Usage</span>
+                <div class="progress progress-mini active progress-striped">
+                    <div style="width: 87%;" class="bar"></div>
+                </div>
+                <span class="percent">87%</span>
+                <div class="stat">604.44 / 4000 MB</div>
+            </li>
+        </ul>
+    </div>
+    <!--sidebar-menu-->
+    <!--main-container-part-->
+    <div id="content">
+        <!--breadcrumbs-->
+        <div id="content-header">
+            <div id="breadcrumb"> <a href="index.html" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Home</a></div>
+        </div>
+        <!--End-breadcrumbs-->
+        <!--End-breadcrumbs-->
+        <!--Action boxes-->
+        <div class="container-fluid">
+            <div class="quick-actions_homepage">
+                <ul class="quick-actions">
+                    <li class="bg_lb"> <a href="index.html"> <i class="icon-dashboard"></i> <span class="label label-important">20</span> My Dashboard </a> </li>
+                    <li class="bg_lg span3"> <a href="charts.html"> <i class="icon-signal"></i> Charts</a> </li>
+                    <li class="bg_ly"> <a href="widgets.html"> <i class="icon-inbox"></i><span class="label label-success">101</span> Widgets </a> </li>
+                    <li class="bg_lo"> <a href="tables.html"> <i class="icon-th"></i> Tables</a> </li>
+                    <li class="bg_ls"> <a href="grid.html"> <i class="icon-fullscreen"></i> Full width</a> </li>
+                    <li class="bg_lo span3"> <a href="form-common.html"> <i class="icon-th-list"></i> Forms</a> </li>
+                    <li class="bg_ls"> <a href="buttons.html"> <i class="icon-tint"></i> Buttons</a> </li>
+                    <li class="bg_lb"> <a href="interface.html"> <i class="icon-pencil"></i>Elements</a> </li>
+                    <li class="bg_lg"> <a href="calendar.html"> <i class="icon-calendar"></i> Calendar</a> </li>
+                    <li class="bg_lr"> <a href="error404.html"> <i class="icon-info-sign"></i> Error</a> </li>
+
+                </ul>
+            </div>
+            <!--End-Action boxes-->
+        </div>
+    </div>
+
+    <!--end-main-container-part-->
+    <!--Footer-part-->
+
+    <div class="row-fluid">
+        <div id="footer" class="span12"> 2013 &copy; Matrix Admin. More Templates <a href="http://www.jinliniuan.com/" target="_blank">金林苑</a></div>
+    </div>
+
+    <!--end-Footer-part-->
+    <script src="~/wwwroot/js/excanvas.min.js"></script>
+    <script src="~/wwwroot/js/jquery.min.js"></script>
+    <script src="~/wwwroot/js/jquery.ui.custom.js"></script>
+    <script src="~/wwwroot/js/bootstrap.min.js"></script>
+    <script src="~/wwwroot/js/jquery.flot.min.js"></script>
+    <script src="~/wwwroot/js/jquery.flot.resize.min.js"></script>
+    <script src="~/wwwroot/js/jquery.peity.min.js"></script>
+    <script src="~/wwwroot/js/fullcalendar.min.js"></script>
+    <script src="~/wwwroot/js/matrix.js"></script>
+    <script src="~/wwwroot/js/matrix.dashboard.js"></script>
+    <script src="~/wwwroot/js/jquery.gritter.min.js"></script>
+    <script src="~/wwwroot/js/matrix.interface.js"></script>
+    <script src="~/wwwroot/js/matrix.chat.js"></script>
+    <script src="~/wwwroot/js/jquery.validate.js"></script>
+    <script src="~/wwwroot/js/matrix.form_validation.js"></script>
+    <script src="~/wwwroot/js/jquery.wizard.js"></script>
+    <script src="~/wwwroot/js/jquery.uniform.js"></script>
+    <script src="~/wwwroot/js/select2.min.js"></script>
+    <script src="~/wwwroot/js/matrix.popover.js"></script>
+    <script src="~/wwwroot/js/jquery.dataTables.min.js"></script>
+    <script src="~/wwwroot/js/matrix.tables.js"></script>
+    <script type="text/javascript">
+        // This function is called from the pop-up menus to transfer to
+        // a different page. Ignore if the value returned is a null string:
+        function goPage(newURL) {
+
+            // if url is empty, skip the menu dividers and reset the menu selection to default
+            if (newURL != "") {
+
+                // if url is "-", it is this page -- reset the menu:
+                if (newURL == "-") {
+                    resetMenu();
+                }
+                // else, send page to designated URL
+                else {
+                    document.location.href = newURL;
+                }
+            }
+        }
+
+        // resets the menu selection upon entry to this page:
+        function resetMenu() {
+            document.gomenu.selector.selectedIndex = 2;
+        }
+    </script>
+</body>
+</html>

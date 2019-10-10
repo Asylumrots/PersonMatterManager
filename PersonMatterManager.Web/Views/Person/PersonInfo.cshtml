@@ -1,0 +1,217 @@
+﻿
+@using PersonMatterManager.Entity
+@using PersonMatterManager.BLL
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Matrix Admin</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="~/wwwroot/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/wwwroot/css/bootstrap-responsive.min.css" />
+    <link rel="stylesheet" href="~/wwwroot/css/uniform.css" />
+    <link rel="stylesheet" href="~/wwwroot/css/select2.css" />
+    <link rel="stylesheet" href="~/wwwroot/css/matrix-style.css" />
+    <link rel="stylesheet" href="~/wwwroot/css/matrix-media.css" />
+    <link href="~/wwwroot/font-awesome/css/font-awesome.css" rel="stylesheet" />
+    <link href='http://www.jinliniuan.com/css/css?family=Open+Sans:400,700,800' rel='stylesheet' type='text/css'>
+</head>
+<body>
+    @RenderPage("~/Views/Menu.cshtml")
+    @{
+        UserInfo us = Session["UserInfo"] as UserInfo;
+    }
+    <div id="content">
+        <div id="content-header">
+            <div id="breadcrumb"> <a href="#" class="tip-bottom" data-original-title="Go to Home"><i class="icon-home"></i> 主页</a> <a href="#" class="current">个人信息</a> </div>
+
+        </div>
+        <div class="container-fluid">
+            <div class="row-fluid">
+                <div class="span12">
+
+                    <div class="widget-box">
+                        <div class="widget-title">
+                            <span class="icon"> <i class="icon-align-justify"></i> </span>
+                            <h5>个人信息</h5>
+                        </div>
+                        <div class="widget-content nopadding">
+                            <form action="#" method="post" class="form-horizontal" id="InfoForm">
+                                <div class="control-group">
+                                    <label class="control-label">姓名 :</label>
+                                    <div class="controls">
+                                        <input type="text" id="name" name="UserName" class="span11" placeholder="暂无数据" value="@us.UserName">
+                                    </div>
+                                </div>
+                                <div class="control-group">
+                                    <label class="control-label">图片 :</label>
+                                    <div class="controls">
+                                        <img src="~/wwwroot/images/@us.UserIphone" height="100px" width="100px" />
+                                        <input type="file" accept=" image/jpeg" name="files" id="files"/>
+                                    </div>
+                                    
+                                </div>
+                                <div class="control-group">
+                                    <label class="control-label">部门 :</label>
+                                    <div class="controls">
+                                        <input type="text" id="department" name="DepartmentID" class="span11" placeholder="暂无数据" value="@Tool.GetDeaprtmentById(Convert.ToInt32(us.DepartmentID))" readonly="readonly">
+                                    </div>
+                                </div>
+                                <div class="control-group">
+                                    <label class="control-label">年龄 :</label>
+                                    <div class="controls">
+                                        <input type="text" id="age" name="UserAge" class="span11" value="@us.UserAge" placeholder="暂无数据">
+                                    </div>
+                                </div>
+                                <div class="control-group">
+                                    <label class="control-label">性别 :</label>
+                                    <div class="controls">
+                                        <input type="text" id="sex" name="UserSex" class="span11" value="@Tool.GetSexbySexId(Convert.ToInt32(us.UserSex))" placeholder="暂无数据">
+                                    </div>
+                                </div>
+                                <div class="control-group">
+                                    <label class="control-label">电话 :</label>
+                                    <div class="controls">
+                                        <input type="text" id="tel" name="UserTel" class="span11" value="@us.UserTel" placeholder="暂无数据">
+                                    </div>
+                                </div>
+                                <div class="control-group">
+                                    <label class="control-label">地址 :</label>
+                                    <div class="controls">
+                                        <input type="text" id="address" name="UserAddress" class="span11" value="@us.UserAddress" placeholder="暂无数据">
+                                    </div>
+                                </div>
+                                <div class="control-group">
+                                    <label class="control-label">入职时间 :</label>
+                                    <div class="controls">
+                                        <input type="text" id="intotime" name="EntryTime" class="span11" value="@us.EntryTime" placeholder="暂无数据" readonly="readonly">
+                                    </div>
+                                </div>
+                                <div class="control-group">
+                                    <label class="control-label">薪资 :</label>
+                                    <div class="controls">
+                                        <input type="text" id="salary" name="BasePay" class="span11" value="@us.BasePay" placeholder="暂无数据" readonly="readonly">
+                                    </div>
+                                </div>
+                                <div class="control-group">
+                                    <label class="control-label">个人介绍 :</label>
+                                    <div class="controls">
+                                        <textarea class="span11" id="remark" name="UserRemarks" placeholder="这家伙很懒什么都没有留下！">@us.UserRemarks</textarea>
+                                    </div>
+                                </div>
+                                <div class="form-actions" style="position:relative;left:44%">
+                                    <button type="button" id="save" class="btn btn-success">保存</button>
+                                    <button type="button" id="show" data-toggle="modal" data-target="#AlterModal" style="display:none"></button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- 模态框示例（Modal） -->
+        <form method="post" action="" class="form-horizontal" role="form" id="form_data" @*onsubmit="return AddDepartment()"*@ style="margin: 20px;">
+            <div class="modal fade" id="AlterModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="width:320px;margin-left:-10%">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                                ×
+                            </button>
+                            <h4 class="modal-title" id="myModalLabel">
+                                操作提示
+                            </h4>
+                        </div>
+                        <div class="modal-body">
+                            <form class="form-horizontal" role="form">
+                                <div class="form-group">
+                                    <label for="DepartmentName" class="col-sm-3 control-label" id="backtxt">修改成功！</label>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <label id="errortxt" style="display:inline-block;margin-right:37%;color:red"></label>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">
+                                确认
+                            </button><span id="tip"> </span>
+                        </div>
+                    </div><!-- /.modal-content -->
+                </div><!-- /.modal -->
+            </div>
+        </form>
+
+    </div>
+    <!--Footer-part-->
+    <div class="row-fluid">
+        <div id="footer" class="span12"> 2013 &copy; Mafortrix Admin. More Templates <a href="http://www.jinliniuan.com/" target="_blank">金林苑</a></div>
+    </div>
+    <!--end-Footer-part-->
+    <script src="~/wwwroot/js/jquery.min.js"></script>
+    <script src="~/wwwroot/js/jquery.ui.custom.js"></script>
+    <script src="~/wwwroot/js/bootstrap.min.js"></script>
+    <script src="~/wwwroot/js/jquery.uniform.js"></script>
+    <script src="~/wwwroot/js/select2.min.js"></script>
+    <script src="~/wwwroot/js/jquery.dataTables.min.js"></script>
+    <script src="~/wwwroot/js/matrix.js"></script>
+    <script src="~/wwwroot/js/matrix.tables.js"></script>
+    <script>
+        $(function () {
+            $("#Person").css("background", "#27a9e3").children("a").css("color", "white");
+
+            @*$.ajax({
+                type: "post",
+                url: "/Person/GetPersonInfo",
+                data: {id:@Session["UserInfo"]},
+                success: function (data) {
+
+                },
+            })*@
+            //关闭清空输入
+            $(function () {
+                $('#AlterModal').on('hide.bs.modal', function () {
+                    location.reload();
+                })
+            });
+
+            $("#save").click(function () {
+                var formData = new FormData(document.getElementById("InfoForm"));
+                $.ajax({
+                    type: "post",
+                    async: false,
+                    url: "/Person/ModifyInfo",
+                    //data: formData,
+                    data: { id:@us.UserID, name: $("#name").val(), age: $("#age").val(), sex: $("#sex").val(), tel: $("#tel").val(), address: $("#address").val(), remark: $("#remark").val() },
+                    success: function (data) {
+                        if (data == "True") {
+                            $.ajax({
+                                type: "post",
+                                async: false,
+                                cache: false,
+                                contentType: false,
+                                processData: false,
+                                url: "/Person/ModifyInfoimg",
+                                data: formData,
+                                //data: { id:us.UserID, files: $("#files").val(), name: $("#name").val(), age: $("#age").val(), sex: $("#sex").val(), tel: $("#tel").val(), address: $("#address").val(), remark: $("#remark").val() },
+                                success: function (data) {
+                                    $("#show").trigger("click");
+                                    if (data == "True") {
+                                        $("#backtxt").text("修改成功！");
+                                    }
+                                    else {
+                                        $("#backtxt").text("修改失败！");
+                                    }
+                                },
+                            });
+                        }
+                        else {
+                            $("#show").trigger("click");
+                            $("#backtxt").text("修改信息失败！");
+                        }
+                        
+                    },
+                });
+            })
+        })
+    </script>
+</body>
+</html>

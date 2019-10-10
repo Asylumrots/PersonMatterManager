@@ -1,0 +1,51 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Matrix Admin</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="~/wwwroot/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/wwwroot/css/bootstrap-responsive.min.css" />
+    <link rel="stylesheet" href="~/wwwroot/css/uniform.css" />
+    <link rel="stylesheet" href="~/wwwroot/css/select2.css" />
+    <link rel="stylesheet" href="~/wwwroot/css/matrix-style.css" />
+    <link rel="stylesheet" href="~/wwwroot/css/matrix-media.css" />
+    <link href="~/wwwroot/font-awesome/css/font-awesome.css" rel="stylesheet" />
+    <link href='http://www.jinliniuan.com/css/css?family=Open+Sans:400,700,800' rel='stylesheet' type='text/css'>
+</head>
+<body>
+    @RenderPage("~/Views/Menu.cshtml")
+    <div id="content">
+        <div id="content-header">
+            <div id="breadcrumb"> <a href="#" class="tip-bottom" data-original-title="Go to Home"><i class="icon-home"></i> 主页</a> <a href="#" class="current">签到</a> </div>
+
+        </div>
+        <div class="container-fluid">
+            <div class="row-fluid">
+                    <iframe src="/Sign/Calender" frameborder="0" height="500px" width="1300px" scrolling="No" leftmargin="0" topmargin="0"></iframe>
+                
+            </div>
+        </div>
+
+    </div>
+    <!--Footer-part-->
+    <div class="row-fluid">
+        <div id="footer" class="span12"> 2013 &copy; Mafortrix Admin. More Templates <a href="http://www.jinliniuan.com/" target="_blank">金林苑</a></div>
+    </div>
+    <!--end-Footer-part-->
+    
+    <script src="~/wwwroot/js/jquery.min.js"></script>
+    <script src="~/wwwroot/js/jquery.ui.custom.js"></script>
+    <script src="~/wwwroot/js/bootstrap.min.js"></script>
+    <script src="~/wwwroot/js/jquery.uniform.js"></script>
+    <script src="~/wwwroot/js/select2.min.js"></script>
+    <script src="~/wwwroot/js/jquery.dataTables.min.js"></script>
+    <script src="~/wwwroot/js/matrix.js"></script>
+    <script src="~/wwwroot/js/matrix.tables.js"></script>
+    <script>
+        $(function () {
+            $("#Sign").css("background", "#27a9e3").children("a").css("color", "white");
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,130 @@
+﻿
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+    <meta name="format-detection" content="telephone=no">
+    <title>JS签到日历插件</title>
+    <link href="../../wwwroot/calender/signin.css" rel="stylesheet" />
+    <link href="../../wwwroot/calender/public.css" rel="stylesheet" />
+</head>
+
+<body>
+    <div class="top flex flex-align-end flex-pack-center flex-warp">
+        <div class="out-1 flex flex-align-center flex-pack-center" id="signIn">
+            <div class="out-2 flex flex-align-center flex-pack-center">
+                <div class="signBtn">
+                    <strong id="sign-txt">签到</strong>
+                    <span style="display:none">连续<em id="sign-count">0</em>天</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    @*<div class="tips">今天已签到，获得1个红包</div>*@
+    <div class="Calendar">
+        <div id="toyear" class="flex flex-pack-center">
+            <div id="idCalendarPre">&lt;</div>
+            <div class="year-month">
+                <span id="idCalendarYear">2018</span>年<span id="idCalendarMonth">6</span>月
+            </div>
+            <div id="idCalendarNext">&gt;</div>
+        </div>
+        <table border="1px" cellpadding="0" cellspacing="0">
+            <thead>
+                <tr class="tou">
+                    <td>日</td>
+                    <td>一</td>
+                    <td>二</td>
+                    <td>三</td>
+                    <td>四</td>
+                    <td>五</td>
+                    <td>六</td>
+                </tr>
+            </thead>
+            <tbody id="idCalendar"></tbody>
+        </table>
+    </div>
+
+    <script src="../../wwwroot/calender/rili.js"></script>
+    <script src="~/wwwroot/js/jquery.min.js"></script>
+    <script language="JavaScript">
+        var isSign = false;
+        var myday = new Array(); //已签到的数组
+        //			myday[0] = "1528646400"
+        //			myday[1] = "1528387200"
+        //			myday[2] = "1525708800"
+
+        //加载本日是否签到
+        $(function () {
+            $.ajax({
+                type: "post",
+                url: "/Sign/CheckSign",
+                success: function (data) {
+                    //console.log(data);//true已签到false未签到
+                    if (data == "True") {
+                        isSign = true;
+                        $$("sign-txt").innerHTML = '已签到';
+                    }
+                }
+            });
+        });
+
+        var cale = new Calendar("idCalendar", {
+            qdDay: myday,
+            onToday: function (o) {
+                o.className = "onToday";
+            },
+            onSignIn: function () {
+                $$("sign-txt").innerHTML = '已签到';
+            },
+            onFinish: function () {
+                $$("sign-count").innerHTML = myday.length //已签到次数
+                $$("idCalendarYear").innerHTML = this.Year;
+                $$("idCalendarMonth").innerHTML = this.Month; //表头年份
+
+            }
+        });
+        $$("idCalendarPre").onclick = function () {
+            cale.PreMonth();
+        }
+        $$("idCalendarNext").onclick = function () {
+            cale.NextMonth();
+        }
+        //添加今天签到
+        $$("signIn").onclick = function () {
+            if (isSign == false) {
+                $.ajax({
+                    type: "post",
+                    url: "/Sign/AddSign",
+                    success: function (data) {
+                        if (data == "True") {
+                            var res = cale.SignIn();
+                            if (res == '1') {
+                                $$("sign-txt").innerHTML = '已签到';
+                                $$("sign-count").innerHTML = parseInt($$("sign-count").innerHTML) + 1;
+                                isSign = true;
+                            } else if (res == '2') {
+                                $$("sign-txt").innerHTML = '已签到';
+                                alert('今天已经签到了')
+                            }
+                        }
+                        else {
+                            alert('签到失败，请重试!');
+                        }
+                    }
+                });
+
+                
+            } else {
+                alert('今天已经签到了')
+            }
+
+        }
+    </script>
+
+</body>
+</html>
+<!--下面是无用代码-->
+<a href="http://www.bootstrapmb.com" style="display:none">bootstrapmb</a>

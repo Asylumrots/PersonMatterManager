@@ -1,0 +1,203 @@
+﻿<!--Header-part-->
+<div id="header">
+    <h1><a href="dashboard.html">Matrix Admin</a></h1>
+</div>
+
+<!-- 模态框示例（Modal） -->
+<form method="post" action="" class="form-horizontal" role="form" id="form_data" @*onsubmit="return AddDepartment()"*@ style="margin: 20px;position:absolute;">
+    <div class="modal fade" id="ModifyPwdModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        ×
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel">
+                        修改密码
+                    </h4>
+                </div>
+                <div class="modal-body">
+                    <form class="form-horizontal" role="form">
+                        <div class="form-group">
+                            <label for="OldPwd" class="col-sm-3 control-label">原密码:</label>
+                            <div class="col-sm-9">
+                                <input type="password" class="form-control" id="OldPwd" name="OldPwd" value=""
+                                       placeholder="原密码" style="margin-left:10px;margin-top:10px">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="NewPwd" class="col-sm-3 control-label">新密码:</label>
+                            <div class="col-sm-9">
+                                <input type="password" class="form-control" id="NewPwd" name="NewPwd" value=""
+                                       placeholder="新密码" style="margin-left:10px;margin-top:10px">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="NewPwd2" class="col-sm-3 control-label">确认密码:</label>
+                            <div class="col-sm-9">
+                                <input type="password" class="form-control" id="NewPwd2" name="NewPwd2" value=""
+                                       placeholder="确认密码" style="margin-left:10px;margin-top:10px">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <label id="errortxt" style="display:inline-block;margin-right:37%;color:red"></label>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">
+                        关闭
+                    </button>
+                    <button type="button" id="ModifyPwd" class="btn btn-primary">
+                        提交
+                    </button><span id="tip"> </span>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal -->
+    </div>
+</form>
+<script src="~/wwwroot/js/jquery.min.js"></script>
+<script>
+    $(function () {
+
+        $("#ModifyPwd").click(function () {
+            var OldPwd = $("#OldPwd").val();
+            var NewPwd = $("#NewPwd").val();
+            var NewPwd2 = $("#NewPwd2").val();
+            if (OldPwd == "" || NewPwd == "" || NewPwd2=="") {
+                $("#errortxt").text("请输入完整信息！");
+                return false;
+            }
+            if (NewPwd != NewPwd2) {
+                console.log(NewPwd); console.log(NewPwd2);
+                $("#errortxt").text("两次新密码不一致！");
+                return false;
+            }
+            $.ajax({
+                type: "post",
+                url: "/Person/ModifyPwd",
+                data: { oldpwd: OldPwd, newpwd: NewPwd },
+                success: function (data) {
+                    if (data == "NoFound") {
+                        $("#errortxt").text("原密码错误！");
+                        return false;
+                    } else if (data == "False") {
+                        alert("修改失败！");
+                        return false;
+                    } else if (data == "True") {
+                        alert("修改成功！请重新登录");
+                        window.location = "/Login/Index";
+                    }
+                }
+            })
+        })
+    })
+    function Out() {
+        $.ajax({
+            type: "post",
+            url: "/Home/Out",
+            success: function (data) {
+                if (data == "True") {
+                    window.location = "/Login/Index";
+                }
+            }
+        })
+    }
+
+</script>
+
+<!--close-Header-part-->
+<!--top-Header-menu-->
+<div id="user-nav" class="navbar navbar-inverse">
+    <ul class="nav">
+        <li class=""><a title="" href="#" data-toggle="modal" data-target="#ModifyPwdModal"><i class="icon icon-key"></i> <span class="text">修改密码</span></a></li>
+        <li class=""><a title="" href="#" onclick="Out()"><i class="icon icon-share-alt"></i> <span class="text">退出</span></a></li>
+    </ul>
+</div>
+<!--close-top-Header-menu-->
+<!--start-top-serch-->
+<div id="search">
+    <input type="text" placeholder="Search here..." />
+    <button type="submit" class="tip-bottom" title="Search"><i class="icon-search icon-white"></i></button>
+</div>
+
+<!--close-top-serch-->
+<!--sidebar-menu-->
+<div id="sidebar">
+    <a href="#" class="visible-phone"><i class="icon icon-home"></i> Dashboard</a>
+    <ul>
+        <li class="submenu" id="Person">
+            <a href="#"><i class="icon icon-home"></i> <span>员工资料管理</span></a>
+            <ul>
+                <li><a href="/Person/PersonInfo">个人信息</a></li>
+                <li><a href="/Person/FriendInfo">查询同事信息</a></li>
+                <li><a href="/Person/PersonManager">员工管理</a></li>
+            </ul>
+        </li>
+        <li class="submenu" id="Leave">
+            <a href="#"><i class="icon icon-signal"></i> <span>请假管理</span></a>
+            <ul>
+                <li><a href="/Leave/LeaveInto">申请请假</a></li>
+                <li><a href="/Leave/LeaveSee">请假审核</a></li>
+                <li><a href="/Leave/LeaveInfo">请假记录</a></li>
+            </ul>
+        </li>
+        <li class="submenu" id="Sign">
+            <a href="#"><i class="icon icon-inbox"></i> <span>考勤管理</span></a>
+            <ul>
+                <li><a href="/Sign/SignIn">签到</a></li>
+                <li><a href="/Sign/SignSee">查看本日考勤</a></li>
+                <li><a href="/Sign/SignRecord">查看考勤记录</a></li>
+            </ul>
+        </li>
+        <li id="Department"><a href="/Department/Index"><i class="icon icon-tint"></i> <span>部门管理</span></a></li>
+        <li class="submenu">
+            <a href="#"><i class="icon icon-th-list"></i> <span>加班管理</span></a>
+            <ul>
+                <li><a href="#">申请加班</a></li>
+                <li><a href="#">加班审核</a></li>
+            </ul>
+        </li>
+        <li class="submenu">
+            <a href="#"><i class="icon icon-file"></i> <span>业绩评定</span></a>
+            <ul>
+                <li><a href="#">填写业绩报告</a></li>
+                <li><a href="#">审核业绩报告</a></li>
+                <li><a href="#">部门年度汇总</a></li>
+            </ul>
+        </li>
+
+        <li class="submenu">
+            <a href="#"><i class="icon icon-file"></i> <span>薪资管理</span></a>
+            <ul>
+                <li><a href="#">查看本月薪资</a></li>
+                <li><a href="#">员工薪资</a></li>
+                <li><a href="#">申请加薪</a></li>
+                <li><a href="#">加薪审核</a></li>
+                <li><a href="#">指定薪资(人事经理)</a></li>
+            </ul>
+        </li>
+        <li class="submenu">
+            <a href="#"><i class="icon icon-info-sign"></i> <span>公告管理</span></a>
+            <ul>
+                <li><a href="#">通知管理</a></li>
+                <li><a href="#">通知列表</a></li>
+            </ul>
+        </li>
+        <li class="content">
+            <span>Monthly Bandwidth Transfer</span>
+            <div class="progress progress-mini progress-danger active progress-striped">
+                <div style="width: 77%;" class="bar"></div>
+            </div>
+            <span class="percent">77%</span>
+            <div class="stat">21419.94 / 14000 MB</div>
+        </li>
+        <li class="content">
+            <span>Disk Space Usage</span>
+            <div class="progress progress-mini active progress-striped">
+                <div style="width: 87%;" class="bar"></div>
+            </div>
+            <span class="percent">87%</span>
+            <div class="stat">604.44 / 4000 MB</div>
+        </li>
+    </ul>
+</div>
+<!--sidebar-menu-->

@@ -1,0 +1,189 @@
+﻿
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Matrix Admin</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="~/wwwroot/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/wwwroot/css/bootstrap-responsive.min.css" />
+    <link rel="stylesheet" href="~/wwwroot/css/uniform.css" />
+    <link rel="stylesheet" href="~/wwwroot/css/select2.css" />
+    <link rel="stylesheet" href="~/wwwroot/css/matrix-style.css" />
+    <link rel="stylesheet" href="~/wwwroot/css/matrix-media.css" />
+    <link href="~/wwwroot/font-awesome/css/font-awesome.css" rel="stylesheet" />
+    <link href='http://www.jinliniuan.com/css/css?family=Open+Sans:400,700,800' rel='stylesheet' type='text/css'>
+</head>
+<body>
+    @RenderPage("~/Views/Menu.cshtml")
+    <div id="content">
+        <div id="content-header">
+            <div id="breadcrumb"> <a href="#" class="tip-bottom" data-original-title="Go to Home"><i class="icon-home"></i> 主页</a> <a href="#" class="current">部门管理</a> </div>
+
+        </div>
+        <div class="container-fluid">
+            <div class="row-fluid">
+                <div class="span12">
+
+                    <div class="widget-box">
+                        <div class="widget-title">
+                            <span class="icon"> <i class="icon-th"></i> </span>
+                            <h5>部门管理</h5>
+                            <button class="btn btn-success" data-toggle="modal" data-target="#addUserModal"><span class="icon-plus"></span></button>
+                            <button class="btn btn-danger" data-toggle="modal" data-target="#DelModal"><span class="icon-remove"></span></button>
+                            <span class="label label-info">基础部门不能删除</span>
+                        </div>
+                        <div class="widget-content ">
+                            <table class="table table-bordered table-striped with-check">
+                                <thead>
+                                    <tr>
+                                        <th><div style="position:relative;left:2px;bottom:2px"><div class="checker" id="uniform-title-table-checkbox"><span><input type="checkbox" id="title-table-checkbox" name="title-table-checkbox" style="opacity: 0;"></span></div></div></th>
+                                        <th>ID</th>
+                                        <th>部门</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tbodys">
+                                    @*<tr>
+                                            <td><div class="checker" id="uniform-undefined"><span ><input type="checkbox" style="opacity: 0;"></span></div></td>
+                                            <td style="text-align:center">Row 1</td>
+                                            <td style="text-align:center">Row 2</td>
+                                        </tr>
+                                        <tr>
+                                            <td><div class="checker" id="uniform-undefined"><span><input type="checkbox" style="opacity: 0;"></span></div></td>
+                                            <td style="text-align:center">Row 1</td>
+                                            <td style="text-align:center">Row 2</td>
+                                        </tr>
+                                        <tr>
+                                            <td><div class="checker" id="uniform-undefined"><span><input type="checkbox" style="opacity: 0;"></span></div></td>
+                                            <td style="text-align:center">Row 1</td>
+                                            <td style="text-align:center">Row 2</td>
+                                        </tr>
+                                        <tr>
+                                            <td><div class="" id="" style="text-align:center"><input type="checkbox" style="resize:both"></div></td>
+                                            <td style="text-align:center">Row 11</td>
+                                            <td style="text-align:center">Row 21</td>
+                                        </tr>*@
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 模态框示例（Modal） -->
+        <form method="post" action="" class="form-horizontal" role="form" id="form_data" @*onsubmit="return AddDepartment()"*@ style="margin: 20px;">
+            <div class="modal fade" id="addUserModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                                ×
+                            </button>
+                            <h4 class="modal-title" id="myModalLabel">
+                                添加部门
+                            </h4>
+                        </div>
+                        <div class="modal-body">
+                            <form class="form-horizontal" role="form">
+                                <div class="form-group">
+                                    <label for="DepartmentName" class="col-sm-3 control-label">部门名称:</label>
+                                    <div class="col-sm-9">
+                                        <input type="text" class="form-control" id="DepartmentName" name="DepartmentName" value=""
+                                               placeholder="请输入部门名称" style="margin-left:10px;margin-top:10px">
+                                    </div>
+                                </div>
+
+                                @*<div class="form-group">
+                                        <label for="lastname" class="col-sm-3 control-label">用户名</label>
+                                        <div class="col-sm-9">
+                                            <input type="text" class="form-control" name="user_name" value="" id="user_name"
+                                                   placeholder="用户名">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="lastname" class="col-sm-3 control-label">地址</label>
+                                        <div class="col-sm-9">
+                                            <input type="text" class="form-control" name="address" value="" id="address"
+                                                   placeholder="地址">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="remark" class="col-sm-3 control-label">备注</label>
+                                        <div class="col-sm-9">
+                                            <textarea class="form-control" name="remark" value="{remark}" id="remark"
+                                                      placeholder="备注">
+
+                                    </textarea>
+                                        </div>
+                                    </div>*@
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <label id="errortxt" style="display:inline-block;margin-right:37%;color:red"></label>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">
+                                关闭
+                            </button>
+                            <button type="button" onclick="AddDepartment()" class="btn btn-primary">
+                                提交
+                            </button><span id="tip"> </span>
+                        </div>
+                    </div><!-- /.modal-content -->
+                </div><!-- /.modal -->
+            </div>
+        </form>
+
+
+        <!-- 模态框示例（Modal） -->
+        <form method="post" action="" class="form-horizontal" role="form" id="form_data" @*onsubmit="return AddDepartment()"*@ style="margin: 20px;">
+            <div class="modal fade" id="DelModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="width:320px;margin-left:-10%">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                                ×
+                            </button>
+                            <h4 class="modal-title" id="myModalLabel">
+                                操作提示？
+                            </h4>
+                        </div>
+                        <div class="modal-body">
+                            <form class="form-horizontal" role="form">
+                                <div class="form-group">
+                                    <label for="DepartmentName" class="col-sm-3 control-label">确认要删除选中项吗？</label>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <label id="errortxt" style="display:inline-block;margin-right:37%;color:red"></label>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">
+                                取消
+                            </button>
+                            <button type="button" onclick="DelDepartment()" class="btn btn-success">
+                                确认
+                            </button><span id="tip"> </span>
+                        </div>
+                    </div><!-- /.modal-content -->
+                </div><!-- /.modal -->
+            </div>
+        </form>
+
+    </div>
+    <!--Footer-part-->
+    <div class="row-fluid">
+        <div id="footer" class="span12"> 2013 &copy; Mafortrix Admin. More Templates <a href="http://www.jinliniuan.com/" target="_blank">金林苑</a></div>
+    </div>
+    <!--end-Footer-part-->
+    <script src="~/wwwroot/js/jquery.min.js"></script>
+    <script src="~/wwwroot/js/jquery.ui.custom.js"></script>
+    <script src="~/wwwroot/js/bootstrap.min.js"></script>
+    <script src="~/wwwroot/js/jquery.uniform.js"></script>
+    <script src="~/wwwroot/js/select2.min.js"></script>
+    <script src="~/wwwroot/js/jquery.dataTables.min.js"></script>
+    <script src="~/wwwroot/js/matrix.js"></script>
+    <script src="~/wwwroot/js/matrix.tables.js"></script>
+    <script>
+    </script>
+</body>
+</html>

@@ -1,0 +1,190 @@
+﻿
+@{
+    Layout = null;
+}
+@using PersonMatterManager.BLL
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Matrix Admin</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="~/wwwroot/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/wwwroot/css/bootstrap-responsive.min.css" />
+    <link rel="stylesheet" href="~/wwwroot/css/uniform.css" />
+    <link rel="stylesheet" href="~/wwwroot/css/select2.css" />
+    <link rel="stylesheet" href="~/wwwroot/css/matrix-style.css" />
+    <link rel="stylesheet" href="~/wwwroot/css/matrix-media.css" />
+    <link href="~/wwwroot/font-awesome/css/font-awesome.css" rel="stylesheet" />
+</head>
+<body>
+    @RenderPage("~/Views/Menu.cshtml")
+    <div id="content">
+        <div id="content-header">
+            <div id="breadcrumb"> <a href="#" class="tip-bottom" data-original-title="Go to Home"><i class="icon-home"></i> 主页</a> <a href="#" class="current">同事信息</a> </div>
+
+        </div>
+        <div class="container-fluid">
+            <div class="row-fluid">
+                <div class="span12">
+
+                    <div class="widget-box">
+                        <div class="widget-title">
+                            <span class="icon"> <i class="icon-th"></i> </span>
+                            <h5>同事信息</h5>
+                        </div>
+                        <div class="widget-content ">
+                            <table class="table table-bordered table-striped with-check">
+                                <thead>
+                                    <tr>
+                                        <th style="width:50px;">编号</th>
+                                        <th>姓名</th>
+                                        <th>年龄</th>
+                                        <th>性别</th>
+                                        <th>电话</th>
+                                        <th>工资</th>
+                                        <th>地址</th>
+                                        <th>入职时间</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tbodys">
+                                    @*<tr>
+                                            <td style="text-align:center">Row 2</td>
+                                            <td style="text-align:center">Row 1</td>
+                                            <td style="text-align:center">Row 2</td>
+                                            <td style="text-align:center">Row 2</td>
+                                            <td style="text-align:center">Row 2</td>
+                                            <td style="text-align:center">Row 2</td>
+                                            <td style="text-align:center">Row 2</td>
+                                            <td style="text-align:center">Row 2</td>
+                                        </tr>*@
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="pagination alternate" style="display:inline-block">
+                            <ul id="pages">
+                                @*<li class="disabled"><a href="#">上一页</a></li>
+                                <li class="active"> <a href="#">1</a> </li>
+                                <li><a href="">2</a></li>
+                                <li><a href="#" onclick="">3</a></li>
+                                <li><a href="#">4</a></li>
+                                <li><a href="#">5 </a></li>
+                                <li><a href="#">下一页</a></li>*@
+                            </ul>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <!--Footer-part-->
+    <div class="row-fluid">
+        <div id="footer" class="span12"> 2013 &copy; Mafortrix Admin. More Templates <a href="http://www.jinliniuan.com/" target="_blank">金林苑</a></div>
+    </div>
+    <!--end-Footer-part-->
+    <script src="~/wwwroot/js/jquery.min.js"></script>
+    <script src="~/wwwroot/js/jquery.ui.custom.js"></script>
+    <script src="~/wwwroot/js/bootstrap.min.js"></script>
+    <script src="~/wwwroot/js/jquery.uniform.js"></script>
+    <script src="~/wwwroot/js/select2.min.js"></script>
+    <script src="~/wwwroot/js/jquery.dataTables.min.js"></script>
+    <script src="~/wwwroot/js/matrix.js"></script>
+    <script src="~/wwwroot/js/matrix.tables.js"></script>
+    <script src="~/wwwroot/PageHelper.js"></script>
+    <script>
+        $(function () {
+            $("#Person").css("background", "#27a9e3").children("a").css("color", "white");
+            @*@{
+		        string s=@:item.EntryTime;
+	        }*@
+            @*@Convert.ToDateTime(s)*@
+            function data_string(str) {
+                var d = eval('new ' + str.substr(1, str.length - 2));
+                var ar_date = [d.getFullYear(), d.getMonth() + 1, d.getDate(), d.getHours(), d.getMinutes(), d.getSeconds()];
+                for (var i = 0; i < ar_date.length; i++) ar_date[i] = dFormat(ar_date[i]);
+                return ar_date.slice(0, 3).join('-') + ' ' + ar_date.slice(3).join(':');
+                function dFormat(i) { return i < 10 ? "0" + i.toString() : i; }
+            }
+            //$.ajax({
+            //    type: "post",
+            //    url: "/Person/GetFriendInfo",
+            //    success: function (data) {
+            //        var html;
+            //        if (data.length == 0) {
+            //            html = '<tr><td colspan="8" style="text-align:center;">暂无数据</td></tr>';
+            //            $("#tbodys").append(html);
+            //        }
+            //        else {
+            //            for (var i = 0; i < data.length; i++) {
+            //                var item = data[i];
+            //                var sex="";
+            //                if(item.UserSex==1){
+            //                    sex="男";
+            //                }
+            //                else{
+            //                    sex="女";
+            //                }
+            //                html = '<tr><td style="text-align:center">' + item.UserID +
+            //                    '</td><td style="text-align:center">' + item.UserName +
+            //                    '</td><td style="text-align:center">' + item.UserAge +
+            //                    '</td><td style="text-align:center">' + sex +
+            //                    '</td><td style="text-align:center">' + item.UserTel +
+            //                    '</td><td style="text-align:center">' + item.BasePay +
+            //                    '</td><td style="text-align:center">' + item.UserAddress +
+            //                    '</td><td style="text-align:center">' +data_string(item.EntryTime) + '</td></tr >';
+            //                $("#tbodys").append(html);
+            //            }
+            //        }
+            //    },
+            //});
+        });
+
+        function showData(data) {
+            console.log("into ShowData one");
+            var html;
+            if (data.length == 0) {
+                html = '<tr><td colspan="8" style="text-align:center;">暂无数据</td></tr>';
+                $("#tbodys").append(html);
+            }
+            else {
+                for (var i = 0; i < data.length; i++) {
+                    var item = data[i];
+                    var sex = "";
+                    if (item.UserSex == 1) {
+                        sex = "男";
+                    }
+                    else {
+                        sex = "女";
+                    }
+                    html = '<tr><td style="text-align:center">' + item.UserID +
+                        '</td><td style="text-align:center">' + item.UserName +
+                        '</td><td style="text-align:center">' + item.UserAge +
+                        '</td><td style="text-align:center">' + sex +
+                        '</td><td style="text-align:center">' + item.UserTel +
+                        '</td><td style="text-align:center">' + item.BasePay +
+                        '</td><td style="text-align:center">' + item.UserAddress +
+                        '</td><td style="text-align:center">' + data_string(item.EntryTime) + '</td></tr >';
+                    $("#tbodys").append(html);
+                }
+            }
+        }
+        //加载分页数据
+        //console.log(fun)
+        loadPageAndNva("Person", "GetFriendInfo", "tbodys", "pages", "PageClick");
+        var pageIndex = 1;
+        var pageSize = 5;
+        PageClick(pageIndex, pageSize);
+        function PageClick(pageSize, pageIndex) {
+            var returnData = GetPageInfo(pageSize, pageIndex);
+            console.log(returnData);
+            showData(returnData);
+        }
+        
+        //GetPageInfo(1, 5);
+            //console.log(data);
+    </script>
+</body>
+</html>

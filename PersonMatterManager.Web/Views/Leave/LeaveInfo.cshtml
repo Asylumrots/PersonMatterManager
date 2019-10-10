@@ -1,0 +1,151 @@
+﻿@using PersonMatterManager.BLL
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Matrix Admin</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="~/wwwroot/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/wwwroot/css/bootstrap-responsive.min.css" />
+    <link rel="stylesheet" href="~/wwwroot/css/uniform.css" />
+    <link rel="stylesheet" href="~/wwwroot/css/select2.css" />
+    <link rel="stylesheet" href="~/wwwroot/css/matrix-style.css" />
+    <link rel="stylesheet" href="~/wwwroot/css/matrix-media.css" />
+    <link href="~/wwwroot/font-awesome/css/font-awesome.css" rel="stylesheet" />
+    <link href='http://www.jinliniuan.com/css/css?family=Open+Sans:400,700,800' rel='stylesheet' type='text/css'>
+</head>
+<body>
+    @RenderPage("~/Views/Menu.cshtml")
+    <div id="content">
+        <div id="content-header">
+            <div id="breadcrumb"> <a href="#" class="tip-bottom" data-original-title="Go to Home"><i class="icon-home"></i> 主页</a> <a href="#" class="current">请假信息</a> </div>
+
+        </div>
+        <div class="container-fluid">
+            <div class="row-fluid">
+                <div class="span12">
+
+                    <div class="widget-box">
+                        <div class="widget-title">
+                            <span class="icon"> <i class="icon-th"></i> </span>
+                            <h5>请假记录</h5>
+                            <button class="btn btn-success" data-toggle="modal" data-target="#addUserModal"><span class="icon-search"></span></button>
+                            <button class="btn btn-info" data-toggle="modal" data-target="#DelModal"><span>导入报表</span></button>
+                        </div>
+                        <div class="widget-content ">
+                            <table class="table table-bordered table-striped with-check">
+                                <thead>
+                                    <tr>
+                                        <th><div style="position:relative;left:2px;bottom:2px"><div class="checker" id="uniform-title-table-checkbox"><span><input type="checkbox" id="title-table-checkbox" name="title-table-checkbox" style="opacity: 0;"></span></div></div></th>
+                                        <th>姓名</th>
+                                        <th>电话</th>
+                                        <th>部门</th>
+                                        <th>开始时间</th>
+                                        <th>结束时间</th>
+                                        <th>请假工时</th>
+                                        <th>是否为半天</th>
+                                        <th>申请时间</th>
+                                        <th>理由</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tbodys">
+                                    @*<tr>
+                                            <td><div class="checker" id="uniform-undefined"><span ><input type="checkbox" style="opacity: 0;"></span></div></td>
+                                            <td style="text-align:center">Row 1</td>
+                                            <td style="text-align:center">Row 2</td>
+                                        </tr>
+                                        <tr>
+                                            <td><div class="checker" id="uniform-undefined"><span><input type="checkbox" style="opacity: 0;"></span></div></td>
+                                            <td style="text-align:center">Row 1</td>
+                                            <td style="text-align:center">Row 2</td>
+                                        </tr>
+                                        <tr>
+                                            <td><div class="checker" id="uniform-undefined"><span><input type="checkbox" style="opacity: 0;"></span></div></td>
+                                            <td style="text-align:center">Row 1</td>
+                                            <td style="text-align:center">Row 2</td>
+                                        </tr>
+                                        <tr>
+                                            <td><div class="" id="" style="text-align:center"><input type="checkbox" style="resize:both"></div></td>
+                                            <td style="text-align:center">Row 11</td>
+                                            <td style="text-align:center">Row 21</td>
+                                        </tr>*@
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <!--Footer-part-->
+    <div class="row-fluid">
+        <div id="footer" class="span12"> 2013 &copy; Mafortrix Admin. More Templates <a href="http://www.jinliniuan.com/" target="_blank">金林苑</a></div>
+    </div>
+    <!--end-Footer-part-->
+    <script src="~/wwwroot/js/jquery.min.js"></script>
+    <script src="~/wwwroot/js/jquery.ui.custom.js"></script>
+    <script src="~/wwwroot/js/bootstrap.min.js"></script>
+    <script src="~/wwwroot/js/jquery.uniform.js"></script>
+    <script src="~/wwwroot/js/select2.min.js"></script>
+    <script src="~/wwwroot/js/jquery.dataTables.min.js"></script>
+    <script src="~/wwwroot/js/matrix.js"></script>
+    <script src="~/wwwroot/js/matrix.tables.js"></script>
+    <script>
+        $(function () {
+            function data_string(str) {
+                var d = eval('new ' + str.substr(1, str.length - 2));
+                var ar_date = [d.getFullYear(), d.getMonth() + 1, d.getDate(), d.getHours(), d.getMinutes(), d.getSeconds()];
+                for (var i = 0; i < ar_date.length; i++) ar_date[i] = dFormat(ar_date[i]);
+                return ar_date.slice(0, 3).join('-') + ' ' + ar_date.slice(3).join(':');
+                function dFormat(i) { return i < 10 ? "0" + i.toString() : i; }
+            }
+            $("#Leave").css("background", "#27a9e3").children("a").css("color", "white");
+            $.ajax({
+                type: "post",
+                url: "/Leave/GetLeaveInfo",
+                success: function (data) {
+                    var html;
+                    if (data.length == 0) {
+                        html = '<tr><td colspan="10" style="text-align:center;">暂无数据</td></tr>';
+                        $("#tbodys").append(html);
+                    }
+                    else {
+                        for (var i = 0; i < data.length; i++) {
+                            var item = data[i];
+                            var id = item.UserID;
+                            var tel, dep, name;
+                            $.ajax({
+                                type: "post",
+                                url: "/Person/GetPersonInfobyID",
+                                data: { id: id },
+                                success: function (data) {
+                                    tel = data.UserTel;
+                                    name = data.UserName;
+                                    dep = data.DepartmentID;
+                                    html = '<tr><td><div style=""><input type="checkbox" style="height:15px;width:15px;position:relative;left:7px;bottom:2px"></div></td>' +
+                                        '<td style="text-align:center">' + name + '</td>' +
+                                        '<td style="text-align:center">' + tel + '</td>' +
+                                        '<td style="text-align:center">' + dep + '</td>' +
+                                        '<td style="text-align:center">' + data_string(item.LeaveStartTime) + '</td>' +
+                                        '<td style="text-align:center">' + data_string(item.LeaveEndTime) + '</td>' +
+                                        '<td style="text-align:center">' + item.LeaveDays + '</td>' +
+                                        '<td style="text-align:center">' + item.LeaveHalfDay + '</td>' +
+                                        '<td style="text-align:center">' + data_string(item.LeaveTime) + '</td>' +
+                                        '<td style="text-align:center">' + item.LeaveReason + '</td></tr >';
+                                    $("#tbodys").append(html);
+                                }
+                            });
+                            
+                        }
+                    }
+                }
+            });
+            
+
+
+        })
+    </script>
+</body>
+</html>
