@@ -101,7 +101,7 @@ namespace PersonMatterManager.BLL
             UserInfo model = userInfoDAL.LoadEntities(u => u.UserName == UserName).FirstOrDefault();
             model.UserIphone = imgSrc;
             bool modify = userInfoDAL.ModifyEntity(model);
-            return modify;
+            return modify; 
         }
 
         public bool ModifyInfoimg(int UserID,string imgSrc,out UserInfo s)
