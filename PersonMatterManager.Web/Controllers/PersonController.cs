@@ -12,7 +12,6 @@ namespace PersonMatterManager.Web.Controllers
     public class PersonController : Controller
     {
         UserInfoBLL userInfoBLL = new UserInfoBLL();
-        // GET: Person
         public ActionResult PersonManager()
         {
             return View();
@@ -49,7 +48,6 @@ namespace PersonMatterManager.Web.Controllers
 
         public bool ModifyInfoimg(HttpPostedFileBase files)
         {
-            //UserInfo us = new UserInfo();
             string s="";
             if (files != null)
             {
@@ -116,7 +114,6 @@ namespace PersonMatterManager.Web.Controllers
 
         public bool AddInfoimg(string UserName,HttpPostedFileBase files)
         {
-            //UserInfo us = new UserInfo();
             string s = "";
             if (files != null)
             {
