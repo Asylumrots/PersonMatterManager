@@ -34,7 +34,7 @@
 #*.modelproj merge=binary
 #*.sqlproj   merge=binary
 #*.wwaproj   merge=binary
-*.js linguist-language=C#
+*.js linguist-language=ASP.NET
 *.css linguist-language=C#
 *.html linguist-language=C#
 
