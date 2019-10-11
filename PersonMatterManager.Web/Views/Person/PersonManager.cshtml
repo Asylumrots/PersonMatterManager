@@ -125,7 +125,7 @@
                             <form class="form-horizontal" role="form">
                                 <div class="form-group" style="height:40px;">
                                     <label for="UserName" class="col-sm-3 control-label">图片:</label>
-                                    <div class="col-sm-9">
+                                    <div class="col-sm-9" style="position:relative;top:10px;left:7px;">
                                         <input type="file" class="form-control" id="files" name="files" value=""
                                                placeholder="" style="margin-left:10px;margin-top:10px;width:300px">
                                     </div>
@@ -599,14 +599,40 @@
                 url: "/Person/AddPerson",
                 data: formData,
                 success: function (data) {
-                    $("#closeAdd").trigger("click");
-                    $("#show").trigger("click");
-                    if (data == "True") {
-                        $("#backtxt").text("添加成功！");
+                    if (data=="True") {
+                        $.ajax({
+                            type: "post",
+                            async: false,
+                            cache: false,
+                            contentType: false,
+                            processData: false,
+                            url: "/Person/AddInfoimg",
+                            data: formData,
+                            success: function (data) {
+                                $("#closeAdd").trigger("click");
+                                $("#show").trigger("click");
+                                if (data == "True") {
+                                    $("#backtxt").text("修改成功！");
+                                }
+                                else {
+                                    $("#backtxt").text("修改失败！");
+                                }
+                            },
+                        });
                     }
                     else {
-                        $("#backtxt").text("添加失败！");
+                        $("#closeAdd").trigger("click");
+                        $("#show").trigger("click");
+                        $("#backtxt").text("修改信息失败！");
                     }
+                    //$("#closeAdd").trigger("click");
+                    //$("#show").trigger("click");
+                    //if (data == "True") {
+                    //    $("#backtxt").text("添加成功！");
+                    //}
+                    //else {
+                    //    $("#backtxt").text("添加失败！");
+                    //}
                 }
             });
         }

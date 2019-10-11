@@ -66,7 +66,7 @@ namespace PersonMatterManager.BLL
             return list;
         }
 
-        public bool AddPerson(UserInfo us)
+        public bool  AddPerson(UserInfo us)
         {
             return userInfoDAL.AddEntity(us);
         }
@@ -94,6 +94,14 @@ namespace PersonMatterManager.BLL
             model.UserTel = us.UserTel;
             model.BasePay = us.BasePay;
             return userInfoDAL.ModifyEntity(model);
+        }
+
+        public bool AddInfoimg(string UserName, string imgSrc)
+        {
+            UserInfo model = userInfoDAL.LoadEntities(u => u.UserName == UserName).FirstOrDefault();
+            model.UserIphone = imgSrc;
+            bool modify = userInfoDAL.ModifyEntity(model);
+            return modify;
         }
 
         public bool ModifyInfoimg(int UserID,string imgSrc,out UserInfo s)

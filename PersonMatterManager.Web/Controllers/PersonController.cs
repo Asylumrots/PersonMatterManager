@@ -109,7 +109,36 @@ namespace PersonMatterManager.Web.Controllers
         {
             us.EntryTime = DateTime.Now;
             us.UserStatr = 1;
-            return Content(userInfoBLL.AddPerson(us).ToString());
+            //return Content(userInfoBLL.AddPerson(us).ToString());
+            bool add = userInfoBLL.AddPerson(us);
+            return Content(add.ToString());
+        }
+
+        public bool AddInfoimg(string UserName,HttpPostedFileBase files)
+        {
+            //UserInfo us = new UserInfo();
+            string s = "";
+            if (files != null)
+            {
+                var webRootPath = AppDomain.CurrentDomain.BaseDirectory;
+                string relativeDirPath = "\\wwwroot\\images";
+                string absolutePath = webRootPath + relativeDirPath;
+
+                string[] fileTypes = new string[] { ".gif", ".jpg", ".jpeg", ".png", ".bmp" };
+                string extension = Path.GetExtension(files.FileName);
+                if (fileTypes.Contains(extension.ToLower()))
+                {
+                    //if (!Directory.Exists(absolutePath)) Directory.CreateDirectory(absolutePath);
+                    Guid gid = Guid.NewGuid();
+                    string fileName = gid.ToString() + extension;
+                    var filePath = absolutePath + "\\" + fileName;
+                    files.SaveAs(filePath);
+                    s = fileName;
+                }
+            }
+            UserInfo us = new UserInfo();
+            bool modify = userInfoBLL.AddInfoimg(UserName,s);
+            return modify;
         }
 
         public JsonResult GetPersonInfo(string number, string name)
