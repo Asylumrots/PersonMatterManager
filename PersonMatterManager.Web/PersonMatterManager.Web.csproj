@@ -131,6 +131,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LeaveController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
+    <Compile Include="Controllers\OverTimeController.cs" />
     <Compile Include="Controllers\PersonController.cs" />
     <Compile Include="Controllers\SignController.cs" />
     <Compile Include="Global.asax.cs">
@@ -159,6 +160,7 @@
     <Content Include="wwwroot\charts.html" />
     <Content Include="wwwroot\chat.html" />
     <Content Include="wwwroot\css\bootstrap-responsive.min.css" />
+    <Content Include="wwwroot\css\bootstrap-table.css" />
     <Content Include="wwwroot\css\bootstrap-wysihtml5.css" />
     <Content Include="wwwroot\css\bootstrap.min.css" />
     <Content Include="wwwroot\css\colorpicker.css" />
@@ -217,10 +219,15 @@
     <Content Include="wwwroot\index2.html" />
     <Content Include="wwwroot\interface.html" />
     <Content Include="wwwroot\invoice.html" />
+    <Content Include="wwwroot\jquery-3.3.1.min.js" />
     <Content Include="wwwroot\js\bootstrap-colorpicker.js" />
     <Content Include="wwwroot\js\bootstrap-datepicker.js" />
+    <Content Include="wwwroot\js\bootstrap-table-export.js" />
+    <Content Include="wwwroot\js\bootstrap-table-zh-CN.min.js" />
+    <Content Include="wwwroot\js\bootstrap-table.min.js" />
     <Content Include="wwwroot\js\bootstrap-wysihtml5.js" />
     <Content Include="wwwroot\js\bootstrap.min.js" />
+    <Content Include="wwwroot\js\dialog.js" />
     <Content Include="wwwroot\js\excanvas.min.js" />
     <Content Include="wwwroot\js\fullcalendar.min.js" />
     <Content Include="wwwroot\js\jquery.dataTables.min.js" />
@@ -250,6 +257,7 @@
     <Content Include="wwwroot\js\matrix.tables.js" />
     <Content Include="wwwroot\js\matrix.wizard.js" />
     <Content Include="wwwroot\js\select2.min.js" />
+    <Content Include="wwwroot\js\tableExport.js" />
     <Content Include="wwwroot\js\wysihtml5-0.3.0.js" />
     <Content Include="wwwroot\login.html" />
     <Content Include="wwwroot\PageHelper.js" />
@@ -306,6 +314,7 @@
     <Content Include="Views\Sign\Calender.cshtml" />
     <Content Include="Views\Sign\SignSee.cshtml" />
     <Content Include="Views\Sign\SignRecord.cshtml" />
+    <Content Include="Views\OverTime\OverTimeInfo.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

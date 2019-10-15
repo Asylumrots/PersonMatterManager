@@ -89,6 +89,7 @@
     <Compile Include="OvertimeCheck.cs">
       <DependentUpon>HRC.tt</DependentUpon>
     </Compile>
+    <Compile Include="OverTimeViewModel.cs" />
     <Compile Include="PayRise.cs">
       <DependentUpon>HRC.tt</DependentUpon>
     </Compile>

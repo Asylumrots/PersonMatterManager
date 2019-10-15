@@ -48,6 +48,7 @@
     <Compile Include="BaseDAL.cs" />
     <Compile Include="DepartmentDAL.cs" />
     <Compile Include="LeaveDAL.cs" />
+    <Compile Include="OverTimeDAL.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RoleDAL.cs" />
     <Compile Include="UserInfoDAL.cs" />

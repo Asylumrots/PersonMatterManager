@@ -1,0 +1,139 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Matrix Admin</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="~/wwwroot/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/wwwroot/css/bootstrap-responsive.min.css" />
+    <link href="~/wwwroot/css/bootstrap-table.css" rel="stylesheet" />
+    <link rel="stylesheet" href="~/wwwroot/css/uniform.css" />
+    <link rel="stylesheet" href="~/wwwroot/css/select2.css" />
+    <link rel="stylesheet" href="~/wwwroot/css/matrix-style.css" />
+    <link rel="stylesheet" href="~/wwwroot/css/matrix-media.css" />
+    <link href="~/wwwroot/font-awesome/css/font-awesome.css" rel="stylesheet" />
+</head>
+<body>
+    @RenderPage("~/Views/Menu.cshtml")
+    <div id="content">
+        <div id="content-header">
+            <div id="breadcrumb"> <a href="#" class="tip-bottom" data-original-title="Go to Home"><i class="icon-home"></i> 主页</a> <a href="#" class="current">加班记录</a> </div>
+
+        </div>
+        <div class="container-fluid">
+            <div class="row-fluid">
+                <div class="span12">
+
+                    <div class="widget-box">
+                        <div class="widget-title" id="tools">
+                            <span class="icon"> <i class="icon-th"></i> </span>
+                            <h5>请假记录</h5>
+                            <button class="btn btn-success" data-toggle="modal" data-target="#addUserModal"><span class="icon-plus"></span></button>
+                            <button class="btn btn-danger" data-toggle="modal" data-target="#DelModal"><span class="icon-remove"></span></button>
+
+                        </div>
+                        <div class="widget-content ">
+                            <table id="tg" class="table table-bordered table-striped"></table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <!--Footer-part-->
+    <div class="row-fluid">
+        <div id="footer" class="span12"> 2013 &copy; Mafortrix Admin. More Templates <a href="http://www.jinliniuan.com/" target="_blank">金林苑</a></div>
+    </div>
+    <!--end-Footer-part-->
+    <script src="~/wwwroot/jquery-3.3.1.min.js"></script>
+    @*bootstarptable使用新版jquery，旧版报错*@
+    @*<script src="~/wwwroot/js/jquery.min.js"></script>*@
+    <script src="~/wwwroot/js/bootstrap.min.js"></script>
+    @*<script src="~/wwwroot/js/jquery.uniform.js"></script>
+        <script src="~/wwwroot/js/select2.min.js"></script>
+        <script src="~/wwwroot/js/jquery.dataTables.min.js"></script>*@
+    @*<script src="~/wwwroot/js/matrix.js"></script>*@
+    <script src="~/wwwroot/js/bootstrap-table.min.js"></script>
+    <script src="~/wwwroot/js/bootstrap-table-zh-CN.min.js"></script>
+    <script src="~/wwwroot/js/bootstrap-table-export.js"></script>
+    <script src="~/wwwroot/js/tableExport.js"></script>
+    <script src="~/wwwroot/js/dialog.js"></script>
+
+    <script>
+        $(function () {
+            $("#OverTime").css("background", "#27a9e3").children("a").css("color", "white");
+            BindTable();
+        })
+
+        //绑定数据表格
+        function BindTable() {
+            $("#tg").bootstrapTable({
+                method: "Get",
+                url: '/OverTime/GetOvertimeInfo', //请求后台的URL（*）控制器中的方法   那个控制器 那个方法
+                //striped: true, //是否显示行间隔色
+                cache: false, //是否使用缓存，默认为true，所以一般情况下需要设置一下这个属性（*）
+                pagination: true, //是否显示分页（*）
+                sortable: false, //是否启用排序
+                sidePagination: "server", //分页方式：client客户端分页，server服务端分页（*）       打开后表中才有数据
+                pageNumber: 1, //初始化加载第一页，默认第一页
+                clickToSelect: true, // 是否启用点击选中行
+                pageSize: 5, //每页的记录行数（*）
+                pageList: [5, 10, 15, 20], //可供选择的每页的行数（*）
+                queryParams: function (parms) {
+                    var temp = { //这里的键的名字和控制器的变量名必须一直，这边改动，控制器也需要改成一样的
+                        //页面大小
+                        limit: parms.limit, //页面大小
+                        //////页码
+                        offset: parms.offset,
+                    };
+                    return temp;
+                },
+                columns: [
+                    { checkbox: true },
+                    { field: 'OverTimeName', title: '姓名', align: 'center' },
+                    //{ field: 'UserTel', title: '电话', align: 'center' },
+                    //{ field: 'DepartmentName', title: '部门', align: 'center' },
+                    {
+                        field: 'OvertimeStateTime', title: '开始时间', align: 'center',
+                        formatter: function (value) {
+                            if (value != null) {
+                                var date = new Date(parseInt(value.replace("/Date(", "").replace(")/", ""), 10));
+                                var month = date.getMonth() + 1 < 10 ? "0" + (date.getMonth() + 1) : date.getMonth() + 1;
+                                var currentDate = date.getDate() < 10 ? "0" + date.getDate() : date.getDate();
+                                return date.getFullYear() + "-" + month + "-" + currentDate;
+                            }
+                        }
+                    },
+                    {
+                        field: 'OvertimeEndTime', title: '结束时间', align: 'center',
+                        formatter: function (value) {
+                            if (value != null) {
+                                var date = new Date(parseInt(value.replace("/Date(", "").replace(")/", ""), 10));
+                                var month = date.getMonth() + 1 < 10 ? "0" + (date.getMonth() + 1) : date.getMonth() + 1;
+                                var currentDate = date.getDate() < 10 ? "0" + date.getDate() : date.getDate();
+                                return date.getFullYear() + "-" + month + "-" + currentDate;
+                            }
+                        }
+                    },
+                    { field: 'OvertimeDuration', title: '请假工时', align: 'center' },
+                    {
+                        field: 'ApplyTime',
+                        title: '申请时间',
+                        align: 'center',
+                        formatter: function (value) {
+                            if (value != null) {
+                                var date = new Date(parseInt(value.replace("/Date(", "").replace(")/", ""), 10));
+                                var month = date.getMonth() + 1 < 10 ? "0" + (date.getMonth() + 1) : date.getMonth() + 1;
+                                var currentDate = date.getDate() < 10 ? "0" + date.getDate() : date.getDate();
+                                return date.getFullYear() + "-" + month + "-" + currentDate;
+                            }
+                        }
+                    },
+                    { field: 'ApproverReason', title: '理由', align: 'center' }
+                ]
+            });
+        }
+    </script>
+</body>
+</html>
