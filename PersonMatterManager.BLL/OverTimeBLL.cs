@@ -27,6 +27,8 @@ namespace PersonMatterManager.BLL
                         OvertimeEndTime=item.OvertimeEndTime,
                         OvertimeState=item.OvertimeState,
                         OvertimeStateTime=item.OvertimeStateTime,
+                        ApplyTime=item.ApplyTime,
+                        ApproverReason=item.ApproverReason,
                     }
                 );
             }

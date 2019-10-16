@@ -1,9 +1,10 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-    <title>Matrix Admin</title>
+    <title>加班记录</title>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="~/wwwroot/font-awesome/css/font-awesome.css" rel="stylesheet" />
     <link rel="stylesheet" href="~/wwwroot/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/wwwroot/css/bootstrap-responsive.min.css" />
     <link href="~/wwwroot/css/bootstrap-table.css" rel="stylesheet" />
@@ -11,7 +12,7 @@
     <link rel="stylesheet" href="~/wwwroot/css/select2.css" />
     <link rel="stylesheet" href="~/wwwroot/css/matrix-style.css" />
     <link rel="stylesheet" href="~/wwwroot/css/matrix-media.css" />
-    <link href="~/wwwroot/font-awesome/css/font-awesome.css" rel="stylesheet" />
+
 </head>
 <body>
     @RenderPage("~/Views/Menu.cshtml")
@@ -27,7 +28,7 @@
                     <div class="widget-box">
                         <div class="widget-title" id="tools">
                             <span class="icon"> <i class="icon-th"></i> </span>
-                            <h5>请假记录</h5>
+                            <h5>加班记录</h5>
                             <button class="btn btn-success" data-toggle="modal" data-target="#addUserModal"><span class="icon-plus"></span></button>
                             <button class="btn btn-danger" data-toggle="modal" data-target="#DelModal"><span class="icon-remove"></span></button>
 
@@ -50,10 +51,10 @@
     @*bootstarptable使用新版jquery，旧版报错*@
     @*<script src="~/wwwroot/js/jquery.min.js"></script>*@
     <script src="~/wwwroot/js/bootstrap.min.js"></script>
-    @*<script src="~/wwwroot/js/jquery.uniform.js"></script>
-        <script src="~/wwwroot/js/select2.min.js"></script>
-        <script src="~/wwwroot/js/jquery.dataTables.min.js"></script>*@
-    @*<script src="~/wwwroot/js/matrix.js"></script>*@
+    <script src="~/wwwroot/js/jquery.uniform.js"></script>
+    <script src="~/wwwroot/js/select2.min.js"></script>
+    @*<script src="~/wwwroot/js/jquery.dataTables.min.js"></script>*@
+    <script src="~/wwwroot/js/matrix.js"></script>
     <script src="~/wwwroot/js/bootstrap-table.min.js"></script>
     <script src="~/wwwroot/js/bootstrap-table-zh-CN.min.js"></script>
     <script src="~/wwwroot/js/bootstrap-table-export.js"></script>

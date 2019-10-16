@@ -150,7 +150,6 @@
     <Content Include="Content\Site.css" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
-    <Content Include="Views\Shared\PageHelper.js" />
     <Content Include="wwwroot\buttons.html" />
     <Content Include="wwwroot\calendar.html" />
     <Content Include="wwwroot\calender\public.css" />
