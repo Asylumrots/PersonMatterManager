@@ -1,4 +1,5 @@
 ﻿<!--Header-part-->
+@using PersonMatterManager.Entity;
 <div id="header">
     <h1><a href="dashboard.html">Matrix Admin</a></h1>
 </div>
@@ -108,6 +109,7 @@
 <!--top-Header-menu-->
 <div id="user-nav" class="navbar navbar-inverse">
     <ul class="nav">
+        <li class=""><a title="" href="#"><i class="icon icon-user"></i> <span class="text" id="usertxt">欢迎： @((Session["Userinfo"] as UserInfo).LoginName)</span></a></li>
         <li class=""><a title="" href="#" data-toggle="modal" data-target="#ModifyPwdModal"><i class="icon icon-key"></i> <span class="text">修改密码</span></a></li>
         <li class=""><a title="" href="#" onclick="Out()"><i class="icon icon-share-alt"></i> <span class="text">退出</span></a></li>
     </ul>

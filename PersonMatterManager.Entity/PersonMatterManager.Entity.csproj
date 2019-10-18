@@ -109,6 +109,7 @@
     <Compile Include="UserInfo.cs">
       <DependentUpon>HRC.tt</DependentUpon>
     </Compile>
+    <Compile Include="UserInfoViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <EntityDeploy Include="HRC.edmx">
