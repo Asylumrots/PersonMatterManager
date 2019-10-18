@@ -7,7 +7,7 @@ using System.Web.Mvc;
 
 namespace PersonMatterManager.Web.Controllers
 {
-    public class OverTimeController : Controller
+    public class OverTimeController : BaseController
     {
         OverTimeBLL overTimeBLL = new OverTimeBLL();
         // GET: OverTime

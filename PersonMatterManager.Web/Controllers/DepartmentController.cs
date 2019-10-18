@@ -7,7 +7,7 @@ using System.Web.Mvc;
 
 namespace PersonMatterManager.Web.Controllers
 {
-    public class DepartmentController : Controller
+    public class DepartmentController : BaseController
     {
         // GET: Department
         public ActionResult Index()

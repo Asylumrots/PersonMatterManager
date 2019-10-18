@@ -8,7 +8,7 @@ using System.Web.Mvc;
 
 namespace PersonMatterManager.Web.Controllers
 {
-    public class SignController : Controller
+    public class SignController : BaseController
     {
         // GET: Sign
         #region 页面显示视图

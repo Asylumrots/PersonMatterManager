@@ -9,7 +9,7 @@ using System.Web.Mvc;
 
 namespace PersonMatterManager.Web.Controllers
 {
-    public class PersonController : Controller
+    public class PersonController : BaseController
     {
         UserInfoBLL userInfoBLL = new UserInfoBLL();
         public ActionResult PersonManager()

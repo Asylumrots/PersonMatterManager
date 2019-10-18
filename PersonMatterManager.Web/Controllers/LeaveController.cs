@@ -8,7 +8,7 @@ using System.Web.Mvc;
 
 namespace PersonMatterManager.Web.Controllers
 {
-    public class LeaveController : Controller
+    public class LeaveController : BaseController
     {
         // GET: Leave
         public ActionResult LeaveInfo()
