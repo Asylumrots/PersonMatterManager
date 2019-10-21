@@ -21,7 +21,7 @@ namespace PersonMatterManager.BLL
                 returnlist.Add(
                     new OverTimeViewModel
                     {
-                        OverTimeName = GetNameById(item.OvertimeID),
+                        OverTimeName = GetNameById(Convert.ToInt32(item.UserID)),
                         OvertimeID = item.OvertimeID,
                         OvertimeDuration=item.OvertimeDuration,
                         OvertimeEndTime=item.OvertimeEndTime,
@@ -38,6 +38,36 @@ namespace PersonMatterManager.BLL
         public string GetNameById(int id)
         {
             return UserInfoDAL.LoadEntities(u => u.UserID == id).FirstOrDefault().UserName;
+        }
+
+        public IQueryable<Overtime> GetOvertimeInfoPersonal(int userID)
+        {
+            return overTimeDAL.LoadEntities(u => u.UserID == userID);
+        }
+
+        public Overtime GetOverTimeById(int id)
+        {
+            return overTimeDAL.LoadEntities(u => u.OvertimeID == id).FirstOrDefault();
+        }
+
+        public bool AddOverTime(Overtime overtime)
+        {
+            overtime.OvertimeState = 0;
+            overtime.OvertimeDuration = 0;
+            return overTimeDAL.AddEntity(overtime);
+        }
+
+        public dynamic GetOverTimeInfo()
+        {
+            return overTimeDAL.GetOverTimeUserInfo();
+        }
+
+        public bool SaveSeeOverTime(int id,int select,string appreason)
+        {
+            var overTime = overTimeDAL.LoadEntities(u => u.OvertimeID==id).FirstOrDefault();
+            overTime.OvertimeState = select;
+            overTime.ApproverReason = appreason;
+            return overTimeDAL.ModifyEntity(overTime);
         }
     }
 }

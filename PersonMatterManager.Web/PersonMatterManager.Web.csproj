@@ -262,6 +262,7 @@
     <Content Include="wwwroot\login.html" />
     <Content Include="wwwroot\PageHelper.js" />
     <Content Include="wwwroot\tables.html" />
+    <Content Include="wwwroot\Tool.js" />
     <Content Include="wwwroot\widgets.html" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
@@ -315,6 +316,8 @@
     <Content Include="Views\Sign\SignSee.cshtml" />
     <Content Include="Views\Sign\SignRecord.cshtml" />
     <Content Include="Views\OverTime\OverTimeInfo.cshtml" />
+    <Content Include="Views\OverTime\OverTimeInto.cshtml" />
+    <Content Include="Views\OverTime\OverTimeSee.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

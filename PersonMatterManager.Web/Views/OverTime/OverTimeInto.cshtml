@@ -1,7 +1,8 @@
 ﻿<!DOCTYPE html>
+@using PersonMatterManager.Entity;
 <html>
 <head>
-    <title>申请请假</title>
+    <title>申请加班</title>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="~/wwwroot/css/bootstrap.min.css" />
@@ -23,7 +24,7 @@
     @RenderPage("~/Views/Menu.cshtml")
     <div id="content">
         <div id="content-header">
-            <div id="breadcrumb"> <a href="#" class="tip-bottom" data-original-title="Go to Home"><i class="icon-home"></i> 主页</a> <a href="#" class="current">申请请假</a> </div>
+            <div id="breadcrumb"> <a href="#" class="tip-bottom" data-original-title="Go to Home"><i class="icon-home"></i> 主页</a> <a href="#" class="current">申请加班</a> </div>
 
         </div>
         <div class="container-fluid">
@@ -33,10 +34,9 @@
                     <div class="widget-box">
                         <div class="widget-title">
                             <span class="icon"> <i class="icon-th"></i> </span>
-                            <h5>申请请假</h5>
+                            <h5>申请加班</h5>
                             <button class="btn btn-info"><span class="icon-search"></span></button>
-                            <button class="btn btn-success" data-toggle="modal" data-target="#addUserModal"><span class="">申请请假</span></button>
-                            <button class="btn btn-danger" data-toggle="modal" data-target="#DelModal"><span class="icon-remove"></span></button>
+                            <button class="btn btn-success" data-toggle="modal" data-target="#addUserModal"><span class="">申请加班</span></button>
                         </div>
                         <div class="widget-content ">
                             <table class="table table-bordered table-striped with-check">
@@ -44,10 +44,9 @@
                                     <tr>
                                         <th><div style="position:relative;left:2px;bottom:2px"><div class="checker" id="uniform-title-table-checkbox"><span><input type="checkbox" id="title-table-checkbox" name="title-table-checkbox" style="opacity: 0;"></span></div></div></th>
                                         <th>姓名</th>
-                                        <th>电话</th>
+                                        <th>所在部门</th>
                                         <th>开始时间</th>
                                         <th>结束时间</th>
-                                        <th>请假工时</th>
                                         <th>申请时间</th>
                                         <th>审批状态</th>
                                         <th>操作</th>
@@ -55,25 +54,25 @@
                                 </thead>
                                 <tbody id="tbodys">
                                     @*<tr>
-                                        <td><div class="checker" id="uniform-undefined"><span ><input type="checkbox" style="opacity: 0;"></span></div></td>
-                                        <td style="text-align:center">Row 1</td>
-                                        <td style="text-align:center"><div >Row 2</div></td>
-                                    </tr>
-                                    <tr>
-                                        <td><div class="checker" id="uniform-undefined"><span><input type="checkbox" style="opacity: 0;"></span></div></td>
-                                        <td style="text-align:center">Row 1</td>
-                                        <td style="text-align:center">Row 2</td>
-                                    </tr>
-                                    <tr>
-                                        <td><div class="checker" id="uniform-undefined"><span><input type="checkbox" style="opacity: 0;"></span></div></td>
-                                        <td style="text-align:center">Row 1</td>
-                                        <td style="text-align:center">Row 2</td>
-                                    </tr>
-                                    <tr>
-                                        <td><div class="" id="" style="text-align:center"><input type="checkbox" style="resize:both"></div></td>
-                                        <td style="text-align:center">Row 11</td>
-                                        <td style="text-align:center">Row 21</td>
-                                    </tr>*@
+                                            <td><div class="checker" id="uniform-undefined"><span ><input type="checkbox" style="opacity: 0;"></span></div></td>
+                                            <td style="text-align:center">Row 1</td>
+                                            <td style="text-align:center"><div >Row 2</div></td>
+                                        </tr>
+                                        <tr>
+                                            <td><div class="checker" id="uniform-undefined"><span><input type="checkbox" style="opacity: 0;"></span></div></td>
+                                            <td style="text-align:center">Row 1</td>
+                                            <td style="text-align:center">Row 2</td>
+                                        </tr>
+                                        <tr>
+                                            <td><div class="checker" id="uniform-undefined"><span><input type="checkbox" style="opacity: 0;"></span></div></td>
+                                            <td style="text-align:center">Row 1</td>
+                                            <td style="text-align:center">Row 2</td>
+                                        </tr>
+                                        <tr>
+                                            <td><div class="" id="" style="text-align:center"><input type="checkbox" style="resize:both"></div></td>
+                                            <td style="text-align:center">Row 11</td>
+                                            <td style="text-align:center">Row 21</td>
+                                        </tr>*@
                                 </tbody>
                             </table>
                         </div>
@@ -92,46 +91,50 @@
                                 ×
                             </button>
                             <h4 class="modal-title" id="myModalLabel">
-                                申请请假
+                                申请加班
                             </h4>
                         </div>
                         <div class="modal-body">
                             <form class="form-horizontal" role="form">
                                 <div class="form-group">
+                                    <label for="LeaveStartTime" class="col-sm-3 control-label">姓名:</label>
+                                    <div class="col-sm-9">
+                                        <input type="text" class="form-control" id="UserName" name="UserName" value=""
+                                               placeholder="" style="margin-left:10px;margin-top:10px" readonly="readonly" >
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="LeaveStartTime" class="col-sm-3 control-label">所在部门:</label>
+                                    <div class="col-sm-9">
+                                        <input type="text" class="form-control" id="UserDepartment" name="UserDepartment" value=""
+                                               placeholder="" style="margin-left:10px;margin-top:10px" readonly="readonly"  >
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="LeaveStartTime" class="col-sm-3 control-label">申请时间:</label>
+                                    <div class="col-sm-9">
+                                        <input type="datetime-local" class="form-control" id="OvertimeStartTime" name="ApplyTime" value=""
+                                               placeholder="" style="margin-left:10px;margin-top:10px" readonly="readonly">
+                                    </div>
+                                </div>
+                                <div class="form-group">
                                     <label for="LeaveStartTime" class="col-sm-3 control-label">开始时间:</label>
                                     <div class="col-sm-9">
-                                        <input type="datetime-local" class="form-control" id="LeaveStartTime" name="LeaveStartTime" value=""
+                                        <input type="datetime-local" class="form-control" id="OvertimeStartTime" name="OvertimeStateTime" value=""
                                                placeholder="" style="margin-left:10px;margin-top:10px">
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="LeaveEndTime" class="col-sm-3 control-label">结束时间:</label>
                                     <div class="col-sm-9">
-                                        <input type="datetime-local" class="form-control" id="LeaveEndTime" name="LeaveEndTime" value=""
+                                        <input type="datetime-local" class="form-control" id="OvertimeEndTime" name="OvertimeEndTime" value=""
                                                placeholder="" style="margin-left:10px;margin-top:10px">
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label for="sexselect2" class="col-sm-3 control-label">是否半天</label>
-                                    <div class="col-sm-9 MySelelct" style="height:40px;">
-                                        <select id="sexselect2" name="LeaveHalfDay" class="MySelect">
-                                            <option value="全天">全天</option>
-                                            <option value="上午">上午</option>
-                                            <option value="上午">下午</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="form-group" style="height:40px">
-                                    <label for="LeaveDays" class="col-sm-3 control-label">请假工时</label>
+                                    <label for="LeaveReason" class="col-sm-3 control-label">加班理由</label>
                                     <div class="col-sm-9">
-                                        <input type="text" class="form-control" name="LeaveDays" value="" id="LeaveDays"
-                                               placeholder="" style="position:relative;top:10px;left:10px">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="LeaveReason" class="col-sm-3 control-label">请假原因</label>
-                                    <div class="col-sm-9">
-                                        <textarea class="form-control" name="LeaveReason" value="" id="LeaveReason"
+                                        <textarea class="form-control" name="OvertimeReason" value="" id="OvertimeReason"
                                                   placeholder="" style="position:relative;top:10px;left:10px"></textarea>
                                     </div>
                                 </div>
@@ -142,43 +145,8 @@
                             <button type="button" id="closeAdd" class="btn btn-default" data-dismiss="modal">
                                 关闭
                             </button>
-                            <button type="button" onclick="AddLeave()" class="btn btn-primary">
+                            <button type="button" onclick="AddOverTime()" class="btn btn-primary">
                                 提交
-                            </button><span id="tip"> </span>
-                        </div>
-                    </div><!-- /.modal-content -->
-                </div><!-- /.modal -->
-            </div>
-        </form>
-
-
-        <!-- 模态框示例（Modal） -->
-        <form method="post" action="" class="form-horizontal" role="form" id="form_data" @*onsubmit="return AddDepartment()"*@ style="margin: 20px;">
-            <div class="modal fade" id="DelModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="width:320px;margin-left:-10%">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
-                                ×
-                            </button>
-                            <h4 class="modal-title" id="myModalLabel">
-                                操作提示？
-                            </h4>
-                        </div>
-                        <div class="modal-body">
-                            <form class="form-horizontal" role="form">
-                                <div class="form-group">
-                                    <label for="DepartmentName" class="col-sm-3 control-label">确认要删除选中项吗？</label>
-                                </div>
-                            </form>
-                        </div>
-                        <div class="modal-footer">
-                            <label id="errortxt" style="display:inline-block;margin-right:37%;color:red"></label>
-                            <button type="button" id="closeDel" class="btn btn-default" data-dismiss="modal">
-                                取消
-                            </button>
-                            <button type="button" onclick="DelLeave()" class="btn btn-success">
-                                确认
                             </button><span id="tip"> </span>
                         </div>
                     </div><!-- /.modal-content -->
@@ -240,10 +208,10 @@
                                 </div>
                                 <div class="form-group" id="ApproverInfo">
                                     @*<div class="alert alert-warning alert-block">
-                                        <a class="close" data-dismiss="alert" href="#">×</a>
-                                        <h4 class="alert-heading">部门经理</h4>
-                                        暂无审批意见
-                                    </div>*@
+                                            <a class="close" data-dismiss="alert" href="#">×</a>
+                                            <h4 class="alert-heading">部门经理</h4>
+                                            暂无审批意见
+                                        </div>*@
                                 </div>
                             </form>
                         </div>
@@ -271,78 +239,68 @@
     <script src="~/wwwroot/js/jquery.dataTables.min.js"></script>
     <script src="~/wwwroot/js/matrix.js"></script>
     <script src="~/wwwroot/js/matrix.tables.js"></script>
+    <script src="~/wwwroot/Tool.js"></script>
     <script>
-        $(function () {
-            function data_string(str) {
-                var d = eval('new ' + str.substr(1, str.length - 2));
-                var ar_date = [d.getFullYear(), d.getMonth() + 1, d.getDate(), d.getHours(), d.getMinutes(), d.getSeconds()];
-                for (var i = 0; i < ar_date.length; i++) ar_date[i] = dFormat(ar_date[i]);
-                return ar_date.slice(0, 3).join('-') + ' ' + ar_date.slice(3).join(':');
-                function dFormat(i) { return i < 10 ? "0" + i.toString() : i; }
+        function data_string(str) {
+            if (str == null) {
+                return "null";
             }
-            $("#Leave").css("background", "#27a9e3").children("a").css("color", "white");
-            $("#s2id_autogen1").css("width", "60px");
-            $(".MySelect").css("display", "block");
-            $("#pageSelect").css("display", "block");
-            $(".select2-container").css("display", "none");
+            var d = eval('new ' + str.substr(1, str.length - 2));
+            var ar_date = [d.getFullYear(), d.getMonth() + 1, d.getDate(), d.getHours(), d.getMinutes(), d.getSeconds()];
+            for (var i = 0; i < ar_date.length; i++) ar_date[i] = dFormat(ar_date[i]);
+            return ar_date.slice(0, 3).join('-') + ' ' + ar_date.slice(3).join(':');
+            function dFormat(i) { return i < 10 ? "0" + i.toString() : i; }
+        }
+
+        $(function () {
+            $("#OverTime").css("background", "#27a9e3").children("a").css("color", "white");
+            $("#UserName").val(UserNameFactory(@((Session["UserInfo"] as UserInfo).UserID)));
+            $("#UserDepartment").val(DepartmentFactory(@((Session["UserInfo"] as UserInfo).DepartmentID)));
+            $("#OvertimeStartTime").val(getNowFormatDate());
+            console.log(getNowFormatDate())
             $.ajax({
                 type: "post",
-                url: "/Leave/GetLeaveUser",
+                url: "/OverTime/GetOverTimeInfoPersonal",
                 success: function (data) {
                     var html;
                     if (data.length == 0) {
-                        html = '<tr><td colspan="9" style="text-align:center;">暂无数据</td></tr>';
+                        html = '<tr><td colspan="8" style="text-align:center;">暂无数据</td></tr>';
                         $("#tbodys").append(html);
                     }
                     else {
                         for (var i = 0; i < data.length; i++) {
                             var item = data[i];
-                            //console.log(item.LeaveID)//45
-                            var id = item.UserID;
-                            var tel, name;
-                            $.ajax({
-                                type: "post",
-                                url: "/Person/GetPersonInfobyID",
-                                async: false,
-                                data: { id: id },//45
-                                success: function (data) {
-                                    tel = data.UserTel;
-                                    name = data.UserName;
-                                    var leaveState, color;
-                                    //console.log(item.LeaveID)//55
-                                    if (item.LeaveState == '0') {
-                                        leaveState = "审核中";
-                                        color = "warning";
-                                    }
-                                    else if (item.LeaveState == '1') {
-                                        leaveState = "同意";
-                                        color = "success";
-                                    }
-                                    else if (item.LeaveState == '-1') {
-                                        leaveState = "驳回";
-                                        color = "important";
-                                    }
-                                    html = '<tr><td><div style=""><input type="checkbox" style="height:15px;width:15px;position:relative;left:7px;bottom:2px"></div></td>' +
-                                        '<td style="text-align:center">' + name + '</td>' +
-                                        '<td style="text-align:center">' + tel + '</td>' +
-                                        '<td style="text-align:center">' + data_string(item.LeaveStartTime) + '</td>' +
-                                        '<td style="text-align:center">' + data_string(item.LeaveEndTime) + '</td>' +
-                                        '<td style="text-align:center">' + item.LeaveDays + '</td>' +
-                                        '<td style="text-align:center">' + data_string(item.LeaveTime) + '</td>' +
-                                        '<td style="text-align:center">	<span class="label label-' + color + '">' + leaveState + '</span></td>' +
-                                        '<td style="text-align:center"><button class="btn btn-info btn-mini" data-toggle="modal" data-target="#SeeState" onclick="SeeLeave(' + item.LeaveID + ')"><span class="icon-search"></span>查看</button></td></tr >';
-                                    $("#tbodys").append(html);
-                                }
-                            });
+                            var OverTimeState, color;
+                            if (item.OvertimeState == '0') {
+                                OverTimeState = "审核中";
+                                color = "warning";
+                            }
+                            else if (item.OvertimeState == '1') {
+                                OverTimeState = "同意";
+                                color = "success";
+                            }
+                            else if (item.OvertimeState == '-1') {
+                                OverTimeState = "驳回";
+                                color = "important";
+                            }
+                            html = '<tr><td><div style=""><input type="checkbox" style="height:15px;width:15px;position:relative;left:7px;bottom:2px"></div></td>' +
+                                '<td style="text-align:center">' + UserNameFactory(item.UserID) + '</td>' +
+                                '<td style="text-align:center">' + DepartmentFactory(@((Session["UserInfo"] as UserInfo).DepartmentID)) + '</td>' +
+                                '<td style="text-align:center">' + data_string(item.ApplyTime) + '</td>' +
+                                '<td style="text-align:center">' + data_string(item.OvertimeStateTime) + '</td>' +
+                                '<td style="text-align:center">' + data_string(item.OvertimeEndTime) + '</td>' +
+                                '<td style="text-align:center">	<span class="label label-' + color + '">' + OverTimeState + '</span></td>' +
+                                '<td style="text-align:center"><button class="btn btn-info btn-mini" data-toggle="modal" data-target="#SeeState" onclick="SeeOverTime(' + item.OvertimeID + ')"><span class="icon-search"></span>查看</button></td></tr >';
+                            $("#tbodys").append(html);
 
                         }
                     }
                 }
             });
-            
+
         })
 
-        function AddLeave() {
+        function AddOverTime() {
             var formData = new FormData(document.getElementById("AddForm"));
             $.ajax({
                 type: "post",
@@ -350,7 +308,7 @@
                 cache: false,
                 contentType: false,
                 processData: false,
-                url: "/Leave/AddLeave",
+                url: "/OverTime/AddOverTime",
                 data: formData,
                 success: function (data) {
                     $("#closeAdd").trigger("click");
@@ -370,53 +328,24 @@
             })
         });
 
-        function DelLeave() {
-            var stime = new Array();
-            var etime = new Array();
-            for (var i = 0; i < $("#tbodys input:checked").length; i++) {
-                stime[i] = $("#tbodys input:checked").eq(i).parent().parent().next().next().next().text();
-                console.log(stime[i])
-            }
-            for (var i = 0; i < $("#tbodys input:checked").length; i++) {
-                etime[i] = $("#tbodys input:checked").eq(i).parent().parent().next().next().next().next().text();
-                console.log(etime[i])
-            }
+        function SeeOverTime(id) {
             $.ajax({
                 type: "post",
-                url: "/Leave/DelLeave",
-                data: { stime: stime, etime: etime },
-                success: function (data) {
-                    $("#closeDel").trigger("click");
-                    $("#show").trigger("click");
-                    if (data == "True") {
-                        $("#backtxt").text("删除成功！");
-                    }
-                    else {
-                        $("#backtxt").text("删除失败！");
-                    }
-                }
-            })
-        }
-
-        function SeeLeave(id) {
-            $.ajax({
-                type: "post",
-                url: "/Leave/GetLeaveSeeById",
+                url: "/OverTime/GetOverTimeById",
                 data: { id: id },
                 success: function (data) {
                     var color, reason;
                     reason = data.ApproverReason;
-                    if (data.LeaveState == 0) {
+                    if (data.OvertimeState == 0) {
                         color = "warning";
                     }
-                    else if (data.LeaveState == 1) {
+                    else if (data.OvertimeState == 1) {
                         color = "success";
                     }
-                    else if (data.LeaveState == -1) {
+                    else if (data.OvertimeState == -1) {
                         color = "error";
                     }
                     if (data.ApproverReason == null || data.ApproverReason == "") {
-                        color ="warning"
                         reason = "暂无意见";
                     }
                     var html = '<div class="alert alert-' + color + ' alert-block"><a class="close" data-dismiss="alert" href="#">×</a><h4 class="alert-heading">部门经理</h4>' + reason + '</div>';
@@ -432,7 +361,6 @@
         //关闭清空输入
         $(function () {
             $('#addUserModal').on('hide.bs.modal', function () {
-                $("#DepartmentName").val();
             })
         });
     </script>

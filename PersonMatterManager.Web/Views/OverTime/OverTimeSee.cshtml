@@ -25,7 +25,7 @@
     @RenderPage("~/Views/Menu.cshtml")
     <div id="content">
         <div id="content-header">
-            <div id="breadcrumb"> <a href="#" class="tip-bottom" data-original-title="Go to Home"><i class="icon-home"></i> 主页</a> <a href="#" class="current">请假审核</a> </div>
+            <div id="breadcrumb"> <a href="#" class="tip-bottom" data-original-title="Go to Home"><i class="icon-home"></i> 主页</a> <a href="#" class="current">加班审核</a> </div>
 
         </div>
         <div class="container-fluid">
@@ -35,7 +35,7 @@
                     <div class="widget-box">
                         <div class="widget-title">
                             <span class="icon"> <i class="icon-th"></i> </span>
-                            <h5>请假记录</h5>
+                            <h5>加班记录</h5>
                             <button class="btn btn-info"><span class="icon-search"></span></button>
                             <button class="btn btn-warning" onclick="SeeCheck()"><span>审批</span></button>
                             <button id="EditBtn" data-toggle="modal" data-target="#addModal" style="display:none;"></button>
@@ -50,33 +50,30 @@
                                         <th>部门</th>
                                         <th>开始时间</th>
                                         <th>结束时间</th>
-                                        <th>请假工时</th>
-                                        <th>是否为半天</th>
                                         <th>申请时间</th>
-                                        <th>理由</th>
                                     </tr>
                                 </thead>
                                 <tbody id="tbodys">
                                     @*<tr>
-                                        <td><div class="checker" id="uniform-undefined"><span ><input type="checkbox" style="opacity: 0;"></span></div></td>
-                                        <td style="text-align:center">Row 1</td>
-                                        <td style="text-align:center">Row 2</td>
-                                    </tr>
-                                    <tr>
-                                        <td><div class="checker" id="uniform-undefined"><span><input type="checkbox" style="opacity: 0;"></span></div></td>
-                                        <td style="text-align:center">Row 1</td>
-                                        <td style="text-align:center">Row 2</td>
-                                    </tr>
-                                    <tr>
-                                        <td><div class="checker" id="uniform-undefined"><span><input type="checkbox" style="opacity: 0;"></span></div></td>
-                                        <td style="text-align:center">Row 1</td>
-                                        <td style="text-align:center">Row 2</td>
-                                    </tr>
-                                    <tr>
-                                        <td><div class="" id="" style="text-align:center"><input type="checkbox" style="resize:both"></div></td>
-                                        <td style="text-align:center">Row 11</td>
-                                        <td style="text-align:center">Row 21</td>
-                                    </tr>*@
+                                            <td><div class="checker" id="uniform-undefined"><span ><input type="checkbox" style="opacity: 0;"></span></div></td>
+                                            <td style="text-align:center">Row 1</td>
+                                            <td style="text-align:center">Row 2</td>
+                                        </tr>
+                                        <tr>
+                                            <td><div class="checker" id="uniform-undefined"><span><input type="checkbox" style="opacity: 0;"></span></div></td>
+                                            <td style="text-align:center">Row 1</td>
+                                            <td style="text-align:center">Row 2</td>
+                                        </tr>
+                                        <tr>
+                                            <td><div class="checker" id="uniform-undefined"><span><input type="checkbox" style="opacity: 0;"></span></div></td>
+                                            <td style="text-align:center">Row 1</td>
+                                            <td style="text-align:center">Row 2</td>
+                                        </tr>
+                                        <tr>
+                                            <td><div class="" id="" style="text-align:center"><input type="checkbox" style="resize:both"></div></td>
+                                            <td style="text-align:center">Row 11</td>
+                                            <td style="text-align:center">Row 21</td>
+                                        </tr>*@
                                 </tbody>
                             </table>
                         </div>
@@ -99,13 +96,15 @@
                         </div>
                         <div class="modal-body">
                             <form class="form-horizontal" role="form">
-                                <div class="form-group">
+                                @*<div class="form-group">
                                     <label for="LeaveReason" class="col-sm-3 control-label">请假原因：</label>
                                     <div class="col-sm-9">
                                         <textarea class="form-control" name="LeaveReason" value="" id="LeaveReason"
-                                                  placeholder="" style="position:relative;top:10px;left:10px"></textarea>
+                                                  placeholder="" style="position:relative;top:10px;left:10px">
+
+                                    </textarea>
                                     </div>
-                                </div>
+                                </div>*@
                                 <div class="form-group">
                                     <label for="ApproverReason" class="col-sm-3 control-label">审批理由：</label>
                                     <div class="col-sm-9">
@@ -192,53 +191,41 @@
                 return ar_date.slice(0, 3).join('-') + ' ' + ar_date.slice(3).join(':');
                 function dFormat(i) { return i < 10 ? "0" + i.toString() : i; }
             }
-            $("#Leave").css("background", "#27a9e3").children("a").css("color", "white");
+            $("#OverTime").css("background", "#27a9e3").children("a").css("color", "white");
             $("#s2id_autogen1").css("width", "60px");
             $(".MySelect").css("display", "block");
             $("#pageSelect").css("display", "block");
             $(".select2-container").css("display", "none");
+            $('#AlterModal').on('hide.bs.modal', function () {
+                location.reload();
+            });
+
             $.ajax({
                 type: "post",
-                url: "/Leave/GetLeaveSee",
+                url: "/OverTime/GetOverTimeSee",
                 success: function (data) {
                     var html;
                     if (data.length == 0) {
-                        html = '<tr><td colspan="10" style="text-align:center;">暂无数据</td></tr>';
+                        html = '<tr><td colspan="7" style="text-align:center;">暂无数据</td></tr>';
                         $("#tbodys").append(html);
                     }
                     else {
                         for (var i = 0; i < data.length; i++) {
                             var item = data[i];
-                            var id = item.UserID;
-                            var tel, dep, name;
-                            $.ajax({
-                                type: "post",
-                                url: "/Person/GetPersonInfobyID",
-                                data: { id: id },
-                                async: false,
-                                success: function (data) {
-                                    tel = data.UserTel;
-                                    name = data.UserName;
-                                    dep = data.DepartmentID;
-                                    html = '<tr><td><div style=""><input type="checkbox" style="height:15px;width:15px;position:relative;left:7px;bottom:2px"></div></td>' +
-                                        '<td style="text-align:center">' + name + '</td>' +
-                                        '<td style="text-align:center">' + tel + '</td>' +
-                                        '<td style="text-align:center">' + DepartmentFactory(dep) + '</td>' +
-                                        '<td style="text-align:center">' + data_string(item.LeaveStartTime) + '</td>' +
-                                        '<td style="text-align:center">' + data_string(item.LeaveEndTime) + '</td>' +
-                                        '<td style="text-align:center">' + item.LeaveDays + '</td>' +
-                                        '<td style="text-align:center">' + item.LeaveHalfDay + '</td>' +
-                                        '<td style="text-align:center">' + data_string(item.LeaveTime) + '</td>' +
-                                        '<td style="text-align:center">' + item.LeaveReason + '</td></tr >';
-                                    $("#tbodys").append(html);
-                                }
-                            });
+                            html = '<tr><td><div style=""><input type="checkbox" style="height:15px;width:15px;position:relative;left:7px;bottom:2px"></div></td><input  type="hidden" value="' + item.OvertimeID + '"/>' +
+                                '<td style="text-align:center">' + item.UserName + '</td>' +
+                                '<td style="text-align:center">' + item.UserTel + '</td>' +
+                                '<td style="text-align:center">' + DepartmentFactory(item.DepartmentID) + '</td>' +
+                                '<td style="text-align:center">' + data_string(item.OvertimeStateTime) + '</td>' +
+                                '<td style="text-align:center">' + data_string(item.OvertimeEndTime) + '</td>' +
+                                '<td style="text-align:center">' + data_string(item.ApplyTime) + '</td></tr >';
+                            $("#tbodys").append(html);
 
                         }
                     }
                 }
             });
-            
+
 
 
         })
@@ -251,7 +238,7 @@
                 url: "/Department/GetDepartmentInfo",
                 async: false,
                 success: function (data) {
-                    for (var i = 0; i < data.length;i++) {
+                    for (var i = 0; i < data.length; i++) {
                         if (departmentid == data[i].DepartmentID) {
                             DeName = data[i].DepartmentName;
                         }
@@ -269,24 +256,22 @@
             }
             else {
                 $("#EditBtn").trigger("click");
-                var stime = $("#tbodys input:checked").parent().parent().next().next().next().next().text();
-                var etime = $("#tbodys input:checked").parent().parent().next().next().next().next().next().text();
-                $.ajax({
-                    type: "post",
-                    url: "/Leave/SeeLeaveInfo",
-                    data: { stime: stime, etime: etime },
-                    success: function (data) {
-                        $("#LeaveReason").val(data.LeaveReason);
-                    }
-                });
+                //var id = $("#tbodys input:checked").parent().parent().next().val();
+                //$.ajax({
+                //    type: "post",
+                //    url: "/OverTime/SeeLeaveInfo",
+                //    data: { id: id },
+                //    success: function (data) {
+                //        //$("#LeaveReason").val(data.LeaveReason);
+                //    }
+                //});
             }
         }
 
         function SaveSeeLeave() {
             var appreason = $("#ApproverReason").val();
             var select;
-            var stime = $("#tbodys input:checked").parent().parent().next().next().next().next().text();
-            var etime = $("#tbodys input:checked").parent().parent().next().next().next().next().next().text();
+            var id = $("#tbodys input:checked").parent().parent().next().val();
             $("#select").find("option").each(function () {
                 if ($(this).prop("selected") == true) {
                     select = $(this).val();
@@ -294,8 +279,8 @@
             });
             $.ajax({
                 type: "post",
-                url: "/Leave/SaveSeeLeave",
-                data: { appreason: appreason, select: select, stime:stime, etime: etime },
+                url: "/OverTime/SaveSeeOverTime",
+                data: { id: id, select: select, appreason: appreason },
                 success: function (data) {
                     $("#closeSaveSee").trigger("click");
                     $("#show").trigger("click");

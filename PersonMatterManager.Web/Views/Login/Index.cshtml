@@ -57,6 +57,12 @@
     <script src="~/wwwroot/js/jquery.min.js"></script>
     <script src="~/wwwroot/js/matrix.login.js"></script>
     <script>
+        $(document).keydown(function (event) {
+            //当按键按下enter时触发
+            if (event.keyCode == 13) {
+                $("#submit").trigger("click");
+            }
+        });
         $(function () {
             $("#submit").click(function () {
                 var Name = $("#Name").val();

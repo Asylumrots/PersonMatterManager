@@ -10,7 +10,7 @@ namespace PersonMatterManager.DAL
 {
      public class BaseDAL<T> where T:class
     {
-        HRCEntities db = new HRCEntities();
+        public HRCEntities db = new HRCEntities();
         public bool AddEntity(T entity)
         {
             db.Set<T>().Add(entity);
