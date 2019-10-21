@@ -318,6 +318,7 @@
     <Content Include="Views\OverTime\OverTimeInfo.cshtml" />
     <Content Include="Views\OverTime\OverTimeInto.cshtml" />
     <Content Include="Views\OverTime\OverTimeSee.cshtml" />
+    <Content Include="Views\Login\LoginError.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

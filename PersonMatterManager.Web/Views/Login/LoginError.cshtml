@@ -1,0 +1,42 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>错误</title>
+    <link rel="stylesheet" href="~/wwwroot/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/wwwroot/css/matrix-style.css" />
+    <link rel="stylesheet" href="~/wwwroot/css/matrix-media.css" />
+    <link href="~/wwwroot/font-awesome/css/font-awesome.css" rel="stylesheet" />
+</head>
+<body>
+    <hr style="color:white;margin-top:120px" />
+    <div class="widget-content">
+        <div class="error_ex">
+            <h1>404</h1>
+            <h3>用户未登录或已过期，请重新登录</h3>
+            <p>Access to this page is for bidden</p>
+            <div id="backLogin" style="margin-bottom:20px">
+                <a class="btn btn-warning btn-big">返回登录</a>
+            </div>
+        </div>
+    </div>
+    <script src="~/wwwroot/js/jquery.min.js"></script>
+    <script src="~/wwwroot/js/jquery.ui.custom.js"></script>
+    <script src="~/wwwroot/js/bootstrap.min.js"></script>
+    <script src="~/wwwroot/js/matrix.js"></script>
+    <script>
+        $(function () {
+            $("#backLogin").click(function () {
+                console.log(!1)
+                window.location.href = "/Login/Index";
+            })
+        })
+    </script>
+</body>
+</html>

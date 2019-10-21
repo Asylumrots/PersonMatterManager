@@ -15,7 +15,7 @@ namespace PersonMatterManager.Web.Controllers
             {
                 //filterContext.HttpContext.Response.Redirect("/Login/Index");
                 //返回Result不用执行控制器方法代码返回ActionResult提高性能
-                filterContext.Result = Redirect("/Login/Index");
+                filterContext.Result = Redirect("/Login/LoginError");
             }
             base.OnActionExecuting(filterContext);
         }

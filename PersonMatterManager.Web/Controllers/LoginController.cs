@@ -17,6 +17,11 @@ namespace PersonMatterManager.Web.Controllers
             return View();
         }
 
+        public ActionResult LoginError()
+        {
+            return View();
+        }
+
         public bool CheckLogin(string name,string pwd)
         {
             UserInfo userinfo = userInfoBLL.checkLogin(name, pwd);
