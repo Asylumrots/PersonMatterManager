@@ -74,11 +74,20 @@ function ShowNva(PageSize, TotalIndex, PageIndex) {
             //console.log("最后二页")
             num1 -= 1; num2 -= 1; num3 -= 1; num4 -= 1; num5 -= 1;
         }
-        li = li + '<li><a onclick="' + showDataFunc + '(' + num1 + ',' + PageSize + ')">' + num1 + '</a></li>';
-        li = li + '<li><a onclick="' + showDataFunc + '(' + num2 + ',' + PageSize + ')">' + num2 + '</a></li>';
-        li = li + '<li><a onclick="' + showDataFunc + '(' + num3 + ',' + PageSize + ')">' + num3 + '</a></li>';
-        li = li + '<li><a onclick="' + showDataFunc + '(' + num4 + ',' + PageSize + ')">' + num4 + '</a></li>';
-        li = li + '<li><a onclick="' + showDataFunc + '(' + num5 + ',' + PageSize + ')">' + num5 + '</a></li>';
+
+        if (num1 == 0) {
+            li = li + '<li><a onclick="GetPageInfo(' + num2 + ',' + PageSize + ')">' + num2 + '</a></li>';
+            li = li + '<li><a onclick="GetPageInfo(' + num3 + ',' + PageSize + ')">' + num3 + '</a></li>';
+            li = li + '<li><a onclick="GetPageInfo(' + num4 + ',' + PageSize + ')">' + num4 + '</a></li>';
+            li = li + '<li><a onclick="GetPageInfo(' + num5 + ',' + PageSize + ')">' + num5 + '</a></li>';
+        }
+        else {
+            li = li + '<li><a onclick="GetPageInfo(' + num1 + ',' + PageSize + ')">' + num1 + '</a></li>';
+            li = li + '<li><a onclick="GetPageInfo(' + num2 + ',' + PageSize + ')">' + num2 + '</a></li>';
+            li = li + '<li><a onclick="GetPageInfo(' + num3 + ',' + PageSize + ')">' + num3 + '</a></li>';
+            li = li + '<li><a onclick="GetPageInfo(' + num4 + ',' + PageSize + ')">' + num4 + '</a></li>';
+            li = li + '<li><a onclick="GetPageInfo(' + num5 + ',' + PageSize + ')">' + num5 + '</a></li>';
+        }
         //console.log(num3)
         //console.log(li)
     }

@@ -77,7 +77,7 @@ namespace PersonMatterManager.BLL
             return list;
         }
 
-        public IQueryable<AttendanceSheet> GetCanvasInfo()
+        public IQueryable<dynamic> GetCanvasInfo()
         {
             return sheetDAL.GetCanvas();
         }

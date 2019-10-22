@@ -9,10 +9,11 @@ namespace PersonMatterManager.DAL
 {
     public class AttendanceSheetDAL:BaseDAL<AttendanceSheet>
     {
-        HRCEntities db = new HRCEntities();
-        public IQueryable<AttendanceSheet> GetCanvas()
+        public IQueryable<dynamic> GetCanvas()
         {
-            return db.AttendanceSheet.Where(u => true).OrderByDescending(u => u.AttendanceStartTime).Take(8);
+            var list = db.AttendanceSheet.GroupBy(u => new { u.AttendanceStartTime})
+                .Select(x=> new { AttendanceStartTime=x.Key.AttendanceStartTime,AttendanceType=x.Count()}).AsQueryable().OrderByDescending(x=>x.AttendanceStartTime).Take(8);
+            return list;
         }
     }
 }
